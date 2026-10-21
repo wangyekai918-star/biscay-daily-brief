@@ -50,6 +50,12 @@
     .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
     .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
     .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .highlights { padding: 0 0 42px; }
+    .highlights .micro-label { display: block; margin-bottom: 14px; }
+    .highlights ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; margin: 0; padding: 0; list-style: none; counter-reset: highlight; }
+    .highlights li { counter-increment: highlight; display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--divider); font-size: 13px; line-height: 1.65; color: var(--secondary); }
+    .highlights li::before { content: counter(highlight, decimal-leading-zero); flex: none; color: var(--quiet); font-size: 11px; font-weight: 800; padding-top: 2px; }
+    .highlights a:hover { color: var(--lime); }
     .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
     .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
     .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
@@ -127,6 +133,8 @@
       .lead p { font-size: 12px; }
       .overview { display: block; padding: 26px 0 32px; }
       .overview p { font-size: 14px; margin-top: 8px; }
+      .highlights { padding-bottom: 30px; }
+      .highlights ol { grid-template-columns: 1fr; }
       .section { padding: 53px 0 45px; }
       .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
       .section-head h2 { font-size: 29px; }
@@ -171,6 +179,13 @@
       </section>
       <div class="rule"></div>
       <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天最值得观察的不是单一模型升级，而是 AI 开始进入车机、小企业经营和专业行业流程。设计工具把评审意见直接贴进可运行原型，产品团队需要重新界定“反馈已处理”的证据。Safari 的追踪防护和汽车安全规则都在收紧边界；游戏方面，两款单人作品刚上架，适合先看真实游玩反馈。</p></section>
+      <section class="highlights" aria-label="先看这 5 条"><span class="micro-label">先看这 5 条</span><ol>
+        <li><a href="https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/" target="_blank" rel="noopener noreferrer">车载 Gemini 开始提供个性化回答，多乘员场景的授权边界要更清楚。</a></li>
+        <li><a href="https://inflight.co/" target="_blank" rel="noopener noreferrer">Inflight 把反馈钉在原型预览里，评审意见终于能对应具体页面和状态。</a></li>
+        <li><a href="https://openai.com/index/openai-to-acquire-orchestra-bio/" target="_blank" rel="noopener noreferrer">OpenAI 收购 Orchestra Bio，AI 正深入需要记录与复核的专业流程。</a></li>
+        <li><a href="https://store.steampowered.com/app/1730790/A_Sisters_Journey/" target="_blank" rel="noopener noreferrer">A Sister’s Journey（手绘像素风银河城动作游戏）已上架，先看实机反馈。</a></li>
+        <li><a href="https://www.ithome.com/1/015/535.htm" target="_blank" rel="noopener noreferrer">第二代海鸥 6.59 万元起，购车应按具体版本核对配置与补能权益。</a></li>
+      </ol></section>
     </div>
     <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
     <div class="content"><div id="sections"></div>
