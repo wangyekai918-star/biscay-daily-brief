@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Biscay 每日晨报，2026 年 10 月 21 日。科技、设计工具、AI、单机游戏与国产新能源汽车。">
+  <title>今日晨报 · 2026.10.21</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #08090b;
+      --surface: #1d1e22;
+      --text: #f7f8f8;
+      --secondary: #b9bbc2;
+      --quiet: #8d9098;
+      --divider: #292b31;
+      --lime: #c3c5ff;
+      --mint: #b6b9ec;
+      --coral: #a3a6b2;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; background: var(--canvas); color: var(--text); font: 15px/1.72 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--lime); }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    svg { width: 19px; height: 19px; stroke-width: 1.8; }
+    .wrap { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 66px; background: #08090b; }
+    .topbar .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 850; font-size: 15px; white-space: nowrap; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7f8f8; color: #111215; border-radius: 9px; font-size: 20px; line-height: 1; }
+    .topbar-date { margin-left: auto; color: var(--quiet); font-size: 12px; white-space: nowrap; }
+    .edition { padding: 44px 0 35px; }
+    .edition-kicker { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: 1.5px; }
+    .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
+    .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+    .lead { position: relative; min-height: 430px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .lead::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,11,.98) 0%, rgba(8,9,11,.93) 36%, rgba(8,9,11,.58) 58%, rgba(8,9,11,.08) 84%), linear-gradient(0deg, rgba(8,9,11,.72), transparent 56%); pointer-events: none; }
+    .lead-copy { position: relative; z-index: 1; min-height: 430px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 640px; }
+    .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
+    .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
+    .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
+    .lead-link svg { width: 15px; height: 15px; }
+    .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
+    .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
+    .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
+    .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
+    .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
+    .chapter-nav .wrap::-webkit-scrollbar { display: none; }
+    .chapter-nav a { flex: none; white-space: nowrap; color: #a9abb3; font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 9px; }
+    .chapter-nav a:hover, .chapter-nav a.active { color: #f7f8f8; background: #292b31; }
+    .content { width: min(1060px, calc(100% - 64px)); margin: 0 auto; }
+    .section { padding: 76px 0 68px; scroll-margin-top: 115px; }
+    .section-head { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: end; gap: 18px; margin-bottom: 24px; }
+    .chapter-number { align-self: start; color: var(--coral); font-size: 12px; font-weight: 850; padding-top: 13px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 3.5vw, 46px); line-height: 1.2; font-weight: 800; }
+    .section-context { margin: 0 0 27px 98px; color: var(--quiet); font-size: 13px; }
+    .story { position: relative; display: grid; grid-template-columns: 80px minmax(0,1fr) 172px; gap: 18px; padding: 28px 0; align-items: start; }
+    .story + .story::before { content: ""; position: absolute; top: 0; left: 98px; right: 0; height: 1px; background: var(--divider); }
+    .story:not(.with-image) .story-content { grid-column: 2 / -1; }
+    .story-index { color: var(--quiet); font-size: 12px; font-weight: 800; padding-top: 4px; }
+    .story-media { grid-column: 3; grid-row: 1; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: #1d1e22; }
+    .story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-content { grid-column: 2; grid-row: 1; min-width: 0; }
+    .story-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+    .story-type { color: #c9cbd4; background: #1f2026; border-radius: 7px; padding: 1px 7px; font-size: 11px; font-weight: 800; }
+    .story-note { color: #d4b685; font-size: 10px; font-weight: 700; }
+    .story-note::before { content: "·"; margin-right: 7px; color: var(--quiet); }
+    .story h3 { margin: 0 0 9px; font-size: 21px; line-height: 1.42; font-weight: 780; overflow-wrap: anywhere; }
+    .story-body-link { display: block; border-radius: 4px; }
+    .story-body-link:hover h3, .story-body-link:focus-visible h3 { color: var(--lime); }
+    .story p { margin: 0; }
+    .story-summary { color: var(--secondary); font-size: 13px; line-height: 1.78; }
+    .story-sources { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 15px; color: var(--quiet); font-size: 12px; }
+    .story-sources a { color: var(--quiet); }
+    .story-sources a:hover { color: var(--secondary); }
+    .takeaway { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 18px; padding-top: 24px; }
+    .takeaway .arrow { font-size: 26px; line-height: 1; color: var(--coral); }
+    .takeaway b { display: block; font-size: 11px; color: var(--lime); margin-bottom: 6px; }
+    .takeaway p { margin: 0; max-width: 850px; font-size: 14px; line-height: 1.83; color: #d4d5db; }
+    .section-break { width: 100%; height: 1px; background: var(--divider); }
+    .resources { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 34px; margin-left: 98px; }
+    .resource { position: relative; display: flex; gap: 13px; padding: 17px 0 19px; }
+    .resource:nth-child(n+3)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+    .resource svg { color: var(--mint); width: 17px; height: 17px; flex: none; margin-top: 4px; }
+    .resource strong { display: block; font-size: 15px; line-height: 1.4; }
+    .resource small { display: block; color: var(--quiet); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+    .endnote { padding: 44px 0 88px; }
+    .endnote .micro-label { display: block; margin-bottom: 12px; }
+    .endnote p { margin: 0; max-width: 920px; font-size: clamp(23px, 2.8vw, 35px); line-height: 1.55; font-weight: 720; }
+    .endnote em { font-style: normal; color: var(--lime); }
+    .footer { padding: 24px 0 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--quiet); font-size: 11px; }
+    .footer a { color: var(--secondary); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .wrap, .content { width: calc(100% - 40px); }
+      .story { grid-template-columns: 48px minmax(0,1fr) 140px; gap: 13px; }
+      .section-head { grid-template-columns: 48px 1fr; gap: 13px; }
+      .section-context, .resources { margin-left: 61px; }
+      .takeaway { grid-template-columns: 48px 1fr; gap: 13px; }
+      .story + .story::before { left: 61px; }
+    }
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 105px; }
+      .wrap, .content { width: calc(100% - 32px); }
+      .topbar { height: 58px; }
+      .topbar .wrap { gap: 10px; }
+      .topbar-date { font-size: 11px; }
+      .brand { font-size: 13px; }
+      .chapter-nav { top: 58px; }
+      .chapter-nav .wrap { gap: 5px; min-height: 45px; }
+      .chapter-nav a { font-size: 11px; }
+      .edition { display: block; padding: 27px 0 25px; }
+      .edition h1 { font-size: 41px; }
+      .edition p { font-size: 13px; line-height: 1.75; }
+      .lead { min-height: 0; background: transparent; overflow: visible; }
+      .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
+      .lead::after { display: none; }
+      .lead-copy { min-height: 0; padding: 19px 0 10px; }
+      .lead h2 { font-size: 25px; }
+      .lead p { font-size: 12px; }
+      .overview { display: block; padding: 26px 0 32px; }
+      .overview p { font-size: 14px; margin-top: 8px; }
+      .section { padding: 53px 0 45px; }
+      .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
+      .section-head h2 { font-size: 29px; }
+      .section-context { margin: 0 0 18px 37px; }
+      .story { grid-template-columns: 28px minmax(0,1fr) 96px; gap: 9px; padding: 23px 0; }
+      .story + .story::before { left: 37px; }
+      .story h3 { font-size: 17px; }
+      .story-summary { font-size: 12px; }
+      .story-sources { font-size: 11px; }
+      .takeaway { grid-template-columns: 38px 1fr; gap: 8px; }
+      .takeaway p { font-size: 13px; }
+      .resources { grid-template-columns: 1fr; margin-left: 46px; }
+      .resource:nth-child(n+2)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+      .endnote { padding: 39px 0 60px; }
+      .endnote p { font-size: 23px; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 7px; }
+    }
+    @media (max-width: 380px) {
+      .edition h1 { font-size: 37px; }
+      .lead h2 { font-size: 22px; }
+      .story { grid-template-columns: 22px minmax(0,1fr) 82px; gap: 8px; }
+      .story + .story::before { left: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chapter-nav { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">B</span><span>每日晨报</span></a>
+      <span class="topbar-date">2026 / 10 / 21 · 星期三</span>
+    </div>
+  </header>
+  <main id="top">
+    <div class="wrap">
+      <section class="edition" aria-label="本期晨报">
+        <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 10.21</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。今天的共同问题：系统越来越主动，用户如何知道它正在做什么。</p></div>
+      </section>
+      <section id="lead-area" aria-label="今日焦点">
+        <div class="lead"><img src="assets/2026-10-21/brief21-lead.png" width="1300" height="730" alt="Google 车载 Gemini 个性化功能官方视觉图"><div class="lead-copy"><span class="lead-label">车载 AI · 今日焦点</span><h2>AI 进入车内，<br>权限也要跟着上车</h2><p>Google 将 Gemini 的个性化能力带入 Android Auto 和内置 Google 的汽车。驾驶场景里，助手知道得越多，越要让用户清楚它何时读取个人信息、何时开口。</p><a class="lead-link" href="https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/" target="_blank" rel="noopener noreferrer">阅读原文 <i data-lucide="arrow-up-right"></i></a></div></div>
+      </section>
+      <div class="rule"></div>
+      <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天最值得观察的不是单一模型升级，而是 AI 开始进入车机、小企业经营和专业行业流程。设计工具把评审意见直接贴进可运行原型，产品团队需要重新界定“反馈已处理”的证据。Safari 的追踪防护和汽车安全规则都在收紧边界；游戏方面，两款单人作品刚上架，适合先看真实游玩反馈。</p></section>
+    </div>
+    <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
+    <div class="content"><div id="sections"></div>
+      <section class="endnote" id="endnote"><span class="micro-label">给 UI 设计师的一句话</span><p>今天值得带走的判断是：<em>自动化越深，状态越要可见。</em> 车机、原型评审与行业 Agent 的共同难点，不是入口够不够聪明，而是权限、进度和失败后的接管能否被看懂。</p></section>
+    </div>
+  </main>
+  <footer class="footer wrap"><div>© 2026 Biscay · 本页按 10 月 21 日晨报整理，原始信息以来源页面为准。</div><span>长期阅读：<a href="https://www.ftium4.com/" target="_blank" rel="noopener noreferrer">ftium4</a> · <a href="https://quaily.com/dingyi" target="_blank" rel="noopener noreferrer">丁一的 Quaily</a></span></footer>
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const chapters = [
+      {id:'tech',number:'01',title:'科技快讯',stories:[
+        {id:'tech-1',tag:'隐私与平台规则',note:'近 48 小时',title:'Safari 27 阻断跨站身份解析基础设施',summary:'WebKit 说明新规则针对第三方隐蔽收集登录邮箱并跨站关联身份的做法。对产品团队，这意味着归因和个性化不能再默认依赖用户看不见的追踪。',sources:[['WebKit 官方','https://webkit.org/blog/18438/blocking-identity-resolution-infrastructure/']],image:'assets/2026-10-21/brief21-tech-1.jpg',alt:'WebKit 官方文章中的身份解析流程示意图'},
+        {id:'tech-2',tag:'云服务可靠性',title:'Google Cloud 英国区域故障波及银行与公共服务网站',summary:'路透报道，伦敦区域电力事件造成服务中断，Google 称现已恢复。登录、支付和查询流程需要清楚的故障提示与可恢复状态，不能让用户反复重试。',sources:[['路透社','https://www.reuters.com/world/europe/google-cloud-services-experience-outage-europe-2026-10-20/']]},
+        {id:'tech-3',tag:'车载平台',title:'Google 把 Gemini 个性化能力带到 Android Auto 和内置 Google 的汽车',summary:'官方称功能开始推出，可结合用户授权的个人信息回答驾驶中的问题；内置 Google 的车仅在连接手机时提供个人化回答。语音便利之外，乘员可见性与授权边界更关键。',sources:[['Google 官方','https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/']],image:'assets/2026-10-21/brief21-tech-3.jpg',alt:'Google 车载 Gemini 个性化能力视觉图'},
+        {id:'tech-4',tag:'浏览器安全',title:'Chrome 强化诈骗网站识别，扩大增强保护范围',summary:'Google 表示将更强的服务端 Gemini 模型用于增强保护，覆盖虚假杀毒和浏览器更新等骗局。安全提示的时机、原因与误报申诉会直接影响用户信任。',sources:[['Google 安全博客','https://blog.google/security/our-latest-defenses-against-evolving-web-scams/']],image:'assets/2026-10-21/brief21-tech-4.jpg',alt:'Google 浏览器诈骗防护视觉图'}
+      ],takeaway:'今天的平台变化集中在边界与可靠性。WebKit 收紧隐性追踪，Chrome 增强诈骗拦截，云故障提醒我们关键任务不能只设计成功态；车载助手则把个人数据权限带进多乘员空间。对 UI 工作，最具体的动作是重新审视授权说明、故障恢复和安全提醒的可理解性。'},
+      {id:'design',number:'02',title:'设计与工具',context:'以 10 月 20 日新上榜和新公布的工作流为主；产品能力按厂商描述，尚非独立实测。',stories:[
+        {id:'design-1',tag:'原型评审 · 可试用',title:'Inflight 把评论直接贴到可运行的原型预览里',summary:'10 月 20 日登上 Product Hunt。它给预览链接加入定位反馈层，适合验证评审意见是否能保留具体页面与状态，而不只散落在聊天记录里。',sources:[['Inflight 官网','https://inflight.co/'],['Product Hunt','https://www.producthunt.com/products/inflight-2']],image:'assets/2026-10-21/brief21-design-1.jpg',alt:'Inflight 原型内定位评论的产品演示图'},
+        {id:'design-2',tag:'协作交付 · 可关注',title:'Stage 将可运行原型的评审、签核与任务流串起来',summary:'产品在 10 月 20 日上榜，宣称能把设计和产品意见转成 Linear 或 Jira 事项。先关注跨角色签核记录是否比新增工具入口更有价值。',sources:[['Product Hunt','https://www.producthunt.com/products/stage-9']],image:'assets/2026-10-21/brief21-design-2.jpg',alt:'Stage 产品展示中的移动原型评审示例'},
+        {id:'design-3',tag:'品牌素材 · 可试用',title:'Gemini 面向小企业推出品牌视觉与内容制作入口',summary:'Google 新增企业工作台、品牌图像风格和模板，并可连接 Adobe、Canva 等工具。适合观察“一次设定品牌、跨任务复用”能否减少重复整理素材。',sources:[['Google 官方','https://blog.google/innovation-and-ai/products/gemini-app/new-tools-small-business-owners/']],image:'assets/2026-10-21/brief21-design-3.jpg',alt:'Gemini 小企业品牌工具官方视觉图'},
+        {id:'design-4',tag:'无代码应用 · 可关注',note:'10 月 20 日上榜',title:'Jotform 应用构建器进入 ChatGPT 与 Claude 工作流',summary:'产品方展示在对话里描述、修改并发布无代码应用。更值得检验的是字段逻辑、异常态与后续维护，而不是首屏生成速度。',sources:[['Product Hunt','https://www.producthunt.com/products/jotform/launches/jotform-app-builder-for-chatgpt-claude'],['Jotform 功能页','https://www.jotform.com/chatgpt/app/features/']],image:'assets/2026-10-21/brief21-design-4.jpg',alt:'Jotform 对话式无代码应用构建功能示意图'}
+      ],takeaway:'设计工具的竞争点正在从“能不能做出界面”移到“反馈如何留下证据、如何进任务、如何持续维护”。Inflight 和 Stage 值得用一次真实评审试验；Jotform 适合快速验证业务流程，但仍需要设计师把边界状态补齐。品牌生成入口很多，真正有用的是让素材规则在后续迭代中保持一致。'},
+      {id:'ai',number:'03',title:'AI 观察',stories:[
+        {id:'ai-1',tag:'行业落地',title:'OpenAI 收购药物研发协作平台 Orchestra Bio',summary:'OpenAI 计划把该团队与生命科学工具 Rosalind 结合，协助生物医药团队协调漫长的研发流程。这里的产品机会是跨角色工作记录与可审计决策，不是“AI 已能研发新药”。',sources:[['OpenAI 官方','https://openai.com/index/openai-to-acquire-orchestra-bio/']]},
+        {id:'ai-2',tag:'Agent 可见性',note:'MakeOS 开放候补',title:'Make 展示可追踪智能体与自动化的统一流程图',summary:'Waves 26 公布的 MakeOS 强调在一张图上看见智能体、负责人和成本；目前主要开放候补与活动体验。Agent 产品设计正从执行入口延伸到过程解释。',sources:[['Make 官方','https://www.make.com/blog/waves26-the-glass-box-for-the-agentic-era'],['MakeOS','https://www.make.com/makeos']],image:'assets/2026-10-21/brief21-ai-2.jpg',alt:'Make 智能体流程可见性发布视觉图'},
+        {id:'ai-3',tag:'医疗研究',note:'研究阶段，非临床产品',title:'Google 介绍 AMIE 在问诊前收集与整理信息的研究',summary:'研究系统尝试先与患者对话、整理资料，再交由医生讨论诊疗方案。高风险场景的交接重点是信息出处、遗漏提示与人工复核，不能把研究成果当成已可就诊的服务。',sources:[['Google Research','https://blog.google/innovation-and-ai/models-and-research/google-research/amie-clinical-study/']],image:'assets/2026-10-21/brief21-ai-3.jpg',alt:'Google AMIE 临床对话研究官方视觉图'},
+        {id:'ai-4',tag:'内容与治理',note:'10 月 20 日更新',title:'OpenAI 更新选举信息与 AI 内容防护说明',summary:'新增美国投票信息接入和选举防护进展，并指出回答附官方来源链接。对设计师，来源可追溯与不确定性提示应当是信息产品的默认层。',sources:[['OpenAI 官方','https://openai.com/index/election-safeguards-2026/']]}
+      ],takeaway:'今天没有必要硬找一个新的模型分数。更明确的方向是 AI 进入药物研发、医疗信息收集和企业自动化等具体流程，同时治理与可追溯要求抬高。做这类产品时，先画清人与 Agent 的责任边界，再设计生成界面；高风险内容要保留来源、审核与回退。'},
+      {id:'game',number:'04',title:'游戏与主机',stories:[
+        {id:'game-1',tag:'Steam · 单人新作',title:'A Sister’s Journey（手绘像素风银河城动作游戏）于 10 月 20 日上架',summary:'开发者主打探索、平台跳跃与可调整的游玩强度。喜欢银河城的玩家可先看实机与首批评价，再决定入手。',sources:[['Steam 商店','https://store.steampowered.com/app/1730790/A_Sisters_Journey/']],image:'assets/2026-10-21/brief21-game-1.jpg',alt:'A Sister’s Journey 手绘像素游戏画面'},
+        {id:'game-2',tag:'Steam · 策略经营',title:'Star Trek: Outposts Unknown（星际迷航题材前哨基地建造游戏）登陆 PC',summary:'10 月 20 日上线，围绕陌生星球的科研设施与基地建设展开，Steam 标注单人游玩。题材玩家值得关注，但先等稳定性和内容量反馈。',sources:[['Steam 商店','https://store.steampowered.com/app/3469910/Star_Trek_Outposts_Unknown/']],image:'assets/2026-10-21/brief21-game-2.jpg',alt:'Star Trek: Outposts Unknown 官方游戏画面'}
+      ],takeaway:'今天适合看两款不同节奏的单人新作：一款考验操作与探索，一款偏基地经营。两者都刚上架，购买判断先看实机、首批评价与本地化信息；无需因为首发时间点立即下单。'},
+      {id:'ev',number:'05',title:'国产新能源汽车',stories:[
+        {id:'ev-1',tag:'新车上市',title:'比亚迪第二代海鸥上市，指导价 6.59 万元起',summary:'五座、后驱和更大车身下探入门纯电；320km 与 420km 版本的补能权益不同，激光雷达也不是全系标配。看车时要按具体版本比较，而不是把发布会功能当作全系体验。',sources:[['IT之家','https://www.ithome.com/1/015/535.htm']],image:'assets/2026-10-21/brief21-ev-1.jpg',alt:'比亚迪第二代海鸥实车展示图'},
+        {id:'ev-2',tag:'电池保障',title:'理想汽车发布“连山”电池保障计划',summary:'官方称自研电池因质量问题自燃且车辆报废时赔同配置新车；碰撞或底盘剐蹭致起火报废时补车损险差额。保障有明确前提，购车应核对适用车型和完整条款。',sources:[['IT之家','https://www.ithome.com/1/015/541.htm']],image:'assets/2026-10-21/brief21-ev-2.jpg',alt:'理想汽车连山电池保障计划发布图'},
+        {id:'ev-3',tag:'智能座舱',note:'发布展示，非全系交付',title:'奇瑞展示新一代 AI 座舱“超能小奇”',summary:'官方在创新大会上展示更主动的理解、记忆与交互能力。真正影响购车的是何时上车、哪些功能可关闭，以及多乘员情况下的隐私边界。',sources:[['IT之家','https://www.ithome.com/1/015/226.htm']],image:'assets/2026-10-21/brief21-ev-3.jpg',alt:'奇瑞全球创新大会智能座舱展示现场'},
+        {id:'ev-4',tag:'辅助驾驶规则',note:'征求意见稿，尚未生效',title:'汽车外部灯光征求意见稿明确限制 L2 辅助驾驶“小蓝灯”',summary:'讨论的是对外传递车辆自动化状态的信号，不能误读为已正式实施。辅助驾驶等级与驾驶责任，仍应首先在车内界面和交付说明里讲清楚。',sources:[['IT之家','https://www.ithome.com/1/015/424.htm']]}
+      ],takeaway:'今天的购车信息一头是入门价格与配置分层，一头是电池保障和辅助驾驶表述。比起单看参数，用户更需要知道某项能力是否属于自己的具体版本、保障触发条件是什么、展示中的 AI 何时真正可用。车机与车外信号都应减少“看起来像自动驾驶”的误解。'}
+    ];
+    const resources = [
+      {name:'WebKit 追踪防护政策',detail:'浏览器隐私规则原始文档，适合做跨站数据设计参考。',href:'https://webkit.org/tracking-prevention-policy/',icon:'shield-check'},
+      {name:'W3C 状态消息指南',detail:'故障、等待与完成反馈的可访问性参考。',href:'https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html',icon:'message-square'},
+      {name:'10 月 20 日 Product Hunt 榜单',detail:'回看当天工具发布，不把上榜直接等同成熟产品。',href:'https://www.producthunt.com/leaderboard/daily/2026/10/20',icon:'list-filter'},
+      {name:'Steam 新品节页面',detail:'集中浏览当前可玩的试玩版与待发售作品。',href:'https://store.steampowered.com/sale/nextfest',icon:'gamepad-2'},
+      {name:'Moonvy 设计素材周刊',detail:'长期素材入口；并非今日更新。',href:'https://moonvy.com/blog/tags/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90%E5%91%A8%E5%88%8A/',icon:'library'}
+    ];
+    const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+    const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
+    const storyHTML = (story,index) => `<article id="${story.id}" class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
+    const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
+    document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>WebKit 与 W3C 的文档适合存进产品规范库；Product Hunt 和 Steam 链接适合做轻量观察。看到新工具先看真实流程与边界，不急着迁移工作流。</p></div></div></section><div class="section-break"></div>`;
+    const chapterNav = document.querySelector('.chapter-nav');
+    const newsContent = document.getElementById('sections');
+    function updateChapterNav() {
+      const bounds = newsContent.getBoundingClientRect();
+      const topOffset = document.querySelector('.topbar').offsetHeight;
+      chapterNav.classList.toggle('visible', bounds.top <= topOffset + 180 && bounds.bottom > topOffset);
+    }
+    window.addEventListener('scroll', updateChapterNav, {passive:true});
+    window.addEventListener('resize', updateChapterNav);
+    const links = [...document.querySelectorAll('.chapter-nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (current) links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current.target.id));
+    },{rootMargin:'-115px 0px -55% 0px'});
+    document.querySelectorAll('.section').forEach(section=>observer.observe(section));
+    if (window.lucide) lucide.createIcons();
+    updateChapterNav();
+  </script>
+</body>
+</html>
