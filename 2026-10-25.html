@@ -38,12 +38,14 @@
     .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
     .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
     .lead { position: relative; min-height: 430px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead-image-link { position: absolute; inset: 0; display: block; }
     .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
     .lead::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,11,.98) 0%, rgba(8,9,11,.93) 36%, rgba(8,9,11,.58) 58%, rgba(8,9,11,.08) 84%), linear-gradient(0deg, rgba(8,9,11,.72), transparent 56%); pointer-events: none; }
     .lead-copy { position: relative; z-index: 1; min-height: 430px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 640px; }
     .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
     .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
     .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-body-link:hover h2, .lead-body-link:focus-visible h2 { color: var(--lime); }
     .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
     .lead-link svg { width: 15px; height: 15px; }
     .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
@@ -126,6 +128,7 @@
       .edition h1 { font-size: 41px; }
       .edition p { font-size: 13px; line-height: 1.75; }
       .lead { min-height: 0; background: transparent; overflow: visible; }
+      .lead-image-link { position: static; }
       .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
       .lead::after { display: none; }
       .lead-copy { min-height: 0; padding: 19px 0 10px; }
@@ -175,7 +178,7 @@
         <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 10.25</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。周日更新不多，重点看真实预览、可追溯的 AI 建议，以及智驾配置如何进入主流价位。</p></div>
       </section>
       <section id="lead-area" aria-label="今日焦点">
-        <div class="lead"><img src="assets/2026-10-25/brief24-lead.png" width="1200" height="675" alt="Figma 设计系统与 Agent 文章配图"><div class="lead-copy"><span class="lead-label">设计系统 · 近 48 小时</span><h2>设计系统，正在成为<br>Agent 的工作上下文</h2><p>Figma 说明如何把已发布的组件库、变量和规则交给 Agent。关键不再是一次生成得多像，而是它能否持续遵守团队已有的产品语言。</p><a class="lead-link" href="https://www.figma.com/blog/how-to-put-your-design-system-to-work-with-the-figma-agent/" target="_blank" rel="noopener noreferrer">阅读原文 <i data-lucide="arrow-up-right"></i></a></div></div>
+        <div class="lead"><a class="lead-image-link" href="https://www.figma.com/blog/how-to-put-your-design-system-to-work-with-the-figma-agent/" target="_blank" rel="noopener noreferrer" aria-label="阅读 Figma 设计系统与 Agent 原文"><img src="assets/2026-10-25/brief24-lead.png" width="1200" height="675" alt="Figma 设计系统与 Agent 文章配图"></a><div class="lead-copy"><span class="lead-label">设计系统 · 近 48 小时</span><a class="lead-body-link" href="https://www.figma.com/blog/how-to-put-your-design-system-to-work-with-the-figma-agent/" target="_blank" rel="noopener noreferrer"><h2>设计系统，正在成为<br>Agent 的工作上下文</h2><p>Figma 说明如何把已发布的组件库、变量和规则交给 Agent。关键不再是一次生成得多像，而是它能否持续遵守团队已有的产品语言。</p></a><a class="lead-link" href="https://www.figma.com/blog/how-to-put-your-design-system-to-work-with-the-figma-agent/" target="_blank" rel="noopener noreferrer">阅读原文 <i data-lucide="arrow-up-right"></i></a></div></div>
       </section>
       <div class="rule"></div>
       <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>这两天的产品消息，反复指向“让用户知道系统此刻在做什么”：RapidNative 把练习数据与真实应用分开讲，Figma 让 Agent 读取既有设计规则，LitPivot 把 AI 建议接到可核对的论文片段。安全研究提醒我们，能力提升同时需要更严的任务边界。主机资讯偏向战役购买判断与制作解析；国产新能源则要分清指导价、置换价、功能范围与长期使用成本。周日高质量更新有限，以下重点采用 10 月 23–24 日已核实的信息。</p></section>
@@ -232,7 +235,7 @@
     ];
     const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
     const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
-    const storyHTML = (story,index) => `<article id="${story.id}" class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const storyHTML = (story,index) => `<article class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
     const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
     const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
     document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>设计令牌规范与 W3C 状态消息适合放进团队资料库，随时对照。Moonvy、丁一的文章可以慢读；Steam 入口用于核对真实评价，不必把每个新作都加入购买清单。</p></div></div></section><div class="section-break"></div>`;
