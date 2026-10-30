@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Biscay 每日晨报，2026 年 10 月 30 日。科技、设计工具、AI、单机游戏与国产新能源汽车。">
+  <title>今日晨报 · 2026.10.30</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #08090b;
+      --surface: #1d1e22;
+      --text: #f7f8f8;
+      --secondary: #b9bbc2;
+      --quiet: #8d9098;
+      --divider: #292b31;
+      --lime: #c3c5ff;
+      --mint: #b6b9ec;
+      --coral: #a3a6b2;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; background: var(--canvas); color: var(--text); font: 15px/1.72 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--lime); }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    svg { width: 19px; height: 19px; stroke-width: 1.8; }
+    .wrap { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 66px; background: #08090b; }
+    .topbar .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 850; font-size: 15px; white-space: nowrap; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7f8f8; color: #111215; border-radius: 9px; font-size: 20px; line-height: 1; }
+    .topbar-date { margin-left: auto; color: var(--quiet); font-size: 12px; white-space: nowrap; }
+    .edition { padding: 44px 0 35px; }
+    .edition-kicker { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: 1.5px; }
+    .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
+    .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+    .lead { position: relative; min-height: 430px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead-image-link { position: absolute; inset: 0; display: block; }
+    .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .lead::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,11,.98) 0%, rgba(8,9,11,.93) 36%, rgba(8,9,11,.58) 58%, rgba(8,9,11,.08) 84%), linear-gradient(0deg, rgba(8,9,11,.72), transparent 56%); pointer-events: none; }
+    .lead-copy { position: relative; z-index: 1; min-height: 430px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 640px; }
+    .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
+    .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
+    .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-body-link:hover h2, .lead-body-link:focus-visible h2 { color: var(--lime); }
+    .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
+    .lead-link svg { width: 15px; height: 15px; }
+    .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
+    .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
+    .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
+    .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .highlights { padding: 0 0 42px; }
+    .highlights .micro-label { display: block; margin-bottom: 14px; }
+    .highlights ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; margin: 0; padding: 0; list-style: none; counter-reset: highlight; }
+    .highlights li { counter-increment: highlight; display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--divider); font-size: 13px; line-height: 1.65; color: var(--secondary); }
+    .highlights li::before { content: counter(highlight, decimal-leading-zero); flex: none; color: var(--quiet); font-size: 11px; font-weight: 800; padding-top: 2px; }
+    .highlights a:hover { color: var(--lime); }
+    .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
+    .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
+    .chapter-nav .wrap::-webkit-scrollbar { display: none; }
+    .chapter-nav a { flex: none; white-space: nowrap; color: #a9abb3; font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 9px; }
+    .chapter-nav a:hover, .chapter-nav a.active { color: #f7f8f8; background: #292b31; }
+    .content { width: min(1060px, calc(100% - 64px)); margin: 0 auto; }
+    .section { padding: 76px 0 68px; scroll-margin-top: 115px; }
+    .section-head { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: end; gap: 18px; margin-bottom: 24px; }
+    .chapter-number { align-self: start; color: var(--coral); font-size: 12px; font-weight: 850; padding-top: 13px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 3.5vw, 46px); line-height: 1.2; font-weight: 800; }
+    .section-context { margin: 0 0 27px 98px; color: var(--quiet); font-size: 13px; }
+    .story { position: relative; display: grid; grid-template-columns: 80px minmax(0,1fr) 172px; gap: 18px; padding: 28px 0; align-items: start; }
+    .story + .story::before { content: ""; position: absolute; top: 0; left: 98px; right: 0; height: 1px; background: var(--divider); }
+    .story:not(.with-image) .story-content { grid-column: 2 / -1; }
+    .story-index { color: var(--quiet); font-size: 12px; font-weight: 800; padding-top: 4px; }
+    .story-media { grid-column: 3; grid-row: 1; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: #1d1e22; }
+    .story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-content { grid-column: 2; grid-row: 1; min-width: 0; }
+    .story-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+    .story-type { color: #c9cbd4; background: #1f2026; border-radius: 7px; padding: 1px 7px; font-size: 11px; font-weight: 800; }
+    .story-note { color: #d4b685; font-size: 10px; font-weight: 700; }
+    .story-note::before { content: "·"; margin-right: 7px; color: var(--quiet); }
+    .story h3 { margin: 0 0 9px; font-size: 21px; line-height: 1.42; font-weight: 780; overflow-wrap: anywhere; }
+    .story-body-link { display: block; border-radius: 4px; }
+    .story-body-link:hover h3, .story-body-link:focus-visible h3 { color: var(--lime); }
+    .story p { margin: 0; }
+    .story-summary { color: var(--secondary); font-size: 13px; line-height: 1.78; }
+    .story-sources { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 15px; color: var(--quiet); font-size: 12px; }
+    .story-sources a { color: var(--quiet); }
+    .story-sources a:hover { color: var(--secondary); }
+    .takeaway { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 18px; padding-top: 24px; }
+    .takeaway .arrow { font-size: 26px; line-height: 1; color: var(--coral); }
+    .takeaway b { display: block; font-size: 11px; color: var(--lime); margin-bottom: 6px; }
+    .takeaway p { margin: 0; max-width: 850px; font-size: 14px; line-height: 1.83; color: #d4d5db; }
+    .section-break { width: 100%; height: 1px; background: var(--divider); }
+    .resources { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 34px; margin-left: 98px; }
+    .resource { position: relative; display: flex; gap: 13px; padding: 17px 0 19px; }
+    .resource:nth-child(n+3)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+    .resource svg { color: var(--mint); width: 17px; height: 17px; flex: none; margin-top: 4px; }
+    .resource strong { display: block; font-size: 15px; line-height: 1.4; }
+    .resource small { display: block; color: var(--quiet); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+    .endnote { padding: 44px 0 88px; }
+    .endnote .micro-label { display: block; margin-bottom: 12px; }
+    .endnote p { margin: 0; max-width: 920px; font-size: clamp(23px, 2.8vw, 35px); line-height: 1.55; font-weight: 720; }
+    .endnote em { font-style: normal; color: var(--lime); }
+    .footer { padding: 24px 0 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--quiet); font-size: 11px; }
+    .footer a { color: var(--secondary); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .wrap, .content { width: calc(100% - 40px); }
+      .story { grid-template-columns: 48px minmax(0,1fr) 140px; gap: 13px; }
+      .section-head { grid-template-columns: 48px 1fr; gap: 13px; }
+      .section-context, .resources { margin-left: 61px; }
+      .takeaway { grid-template-columns: 48px 1fr; gap: 13px; }
+      .story + .story::before { left: 61px; }
+    }
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 105px; }
+      .wrap, .content { width: calc(100% - 32px); }
+      .topbar { height: 58px; }
+      .topbar .wrap { gap: 10px; }
+      .topbar-date { font-size: 11px; }
+      .brand { font-size: 13px; }
+      .chapter-nav { top: 58px; }
+      .chapter-nav .wrap { gap: 5px; min-height: 45px; }
+      .chapter-nav a { font-size: 11px; }
+      .edition { display: block; padding: 27px 0 25px; }
+      .edition h1 { font-size: 41px; }
+      .edition p { font-size: 13px; line-height: 1.75; }
+      .lead { min-height: 0; background: transparent; overflow: visible; }
+      .lead-image-link { position: static; }
+      .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
+      .lead::after { display: none; }
+      .lead-copy { min-height: 0; padding: 19px 0 10px; }
+      .lead h2 { font-size: 25px; }
+      .lead p { font-size: 12px; }
+      .overview { display: block; padding: 26px 0 32px; }
+      .overview p { font-size: 14px; margin-top: 8px; }
+      .highlights { padding-bottom: 30px; }
+      .highlights ol { grid-template-columns: 1fr; }
+      .section { padding: 53px 0 45px; }
+      .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
+      .section-head h2 { font-size: 29px; }
+      .section-context { margin: 0 0 18px 37px; }
+      .story { grid-template-columns: 28px minmax(0,1fr) 96px; gap: 9px; padding: 23px 0; }
+      .story + .story::before { left: 37px; }
+      .story h3 { font-size: 17px; }
+      .story-summary { font-size: 12px; }
+      .story-sources { font-size: 11px; }
+      .takeaway { grid-template-columns: 38px 1fr; gap: 8px; }
+      .takeaway p { font-size: 13px; }
+      .resources { grid-template-columns: 1fr; margin-left: 46px; }
+      .resource:nth-child(n+2)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+      .endnote { padding: 39px 0 60px; }
+      .endnote p { font-size: 23px; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 7px; }
+    }
+    @media (max-width: 380px) {
+      .edition h1 { font-size: 37px; }
+      .lead h2 { font-size: 22px; }
+      .story { grid-template-columns: 22px minmax(0,1fr) 82px; gap: 8px; }
+      .story + .story::before { left: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chapter-nav { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">B</span><span>每日晨报</span></a>
+      <span class="topbar-date">2026 / 10 / 30 · 星期五</span>
+    </div>
+  </header>
+  <main id="top">
+    <div class="wrap">
+      <section class="edition" aria-label="本期晨报">
+        <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 10.30</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。今天看家居屏幕、可编辑 AI 文件、国产单机大作，以及两款新车的真实成交条件。</p></div>
+      </section>
+      <section id="lead-area" aria-label="今日焦点">
+        <div class="lead"><a class="lead-image-link" href="https://store.steampowered.com/app/4115450/Phantom_Blade_Zero/" target="_blank" rel="noopener noreferrer" aria-label="查看《影之刃零》Steam 商店"><img src="assets/2026-10-30/brief30-phantom-hero.jpg" width="1438" height="810" alt="《影之刃零》Steam 官方商店角色画面"></a><div class="lead-copy"><span class="lead-label">游戏焦点 · 10 月 29 日</span><a class="lead-body-link" href="https://store.steampowered.com/app/4115450/Phantom_Blade_Zero/" target="_blank" rel="noopener noreferrer"><h2>《影之刃零》正式发售，<br>先看手感与性能反馈</h2><p>国产武侠动作游戏登陆 PS5 与 PC，Steam 国区数字标准版报道为 268 元。首日热度很高，但购买前仍值得核对自己的平台表现、配置需求和早期玩家反馈。</p></a><a class="lead-link" href="https://store.steampowered.com/app/4115450/Phantom_Blade_Zero/" target="_blank" rel="noopener noreferrer">查看商店 <i data-lucide="arrow-up-right"></i></a></div></div>
+      </section>
+      <div class="rule"></div>
+      <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天最明显的变化，是 AI 从“回答”进入可编辑文件、设计画布与家居设备：用户需要看见它改了什么，也要能继续自己改。Figma 与 Canva 都把注意力放在原生设计结构，而非只生成一张图；GitHub 和 Adobe 则让协作上下文与执行轨迹更容易追溯。单机玩家迎来《影之刃零》和叙事游戏复刻版，购车用户则要区分正式指导价与限时权益价。跨领域共同问题是：新能力越强，状态、边界和回退越要清楚。</p></section>
+      <section class="highlights" aria-label="先看这 5 条"><span class="micro-label">先看这 5 条</span><ol>
+        <li><a href="https://www.aboutamazon.com/news/devices/new-alexa-devices-2026" target="_blank" rel="noopener noreferrer">Amazon 推出新一代 Alexa 家居设备，屏幕、语音与相册开始共享同一任务上下文。</a></li>
+        <li><a href="https://www.canva.com/newsroom/news/canva-brush/" target="_blank" rel="noopener noreferrer">Canva Brush 进入受支持的设计编辑，AI 设计竞争转向可修改的原生对象。</a></li>
+        <li><a href="https://blog.google/innovation-and-ai/products/gemini-app/edit-files-directly/" target="_blank" rel="noopener noreferrer">Gemini 现可在聊天内预览和编辑文件，PDF 同时支持网页与移动端。</a></li>
+        <li><a href="https://store.steampowered.com/app/4115450/Phantom_Blade_Zero/" target="_blank" rel="noopener noreferrer">《影之刃零》正式发售；首日先看平台表现与实玩反馈，再决定是否入手。</a></li>
+        <li><a href="https://www.xiaopeng.com/news/company_news/5606.html" target="_blank" rel="noopener noreferrer">小鹏 MONA L05 正式上市，13.98 万元起是限时价，需按版本核对权益。</a></li>
+      </ol></section>
+    </div>
+    <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
+    <div class="content"><div id="sections"></div>
+      <section class="endnote" id="endnote"><span class="micro-label">给 UI 设计师的一句话</span><p>今天值得带走的判断是：<em>生成能力要进入真实工作流，必须保留人的编辑权和判断权。</em> 无论是 AI 文件、设计画布、家居屏幕还是智能座舱，界面都应讲清当前状态、适用范围，以及下一步谁来确认。</p></section>
+    </div>
+  </main>
+  <footer class="footer wrap"><div>© 2026 Biscay · 本页按 10 月 30 日晨报整理，原始信息以来源页面为准。</div><span>长期阅读：<a href="https://www.ftium4.com/" target="_blank" rel="noopener noreferrer">ftium4</a> · <a href="https://quaily.com/dingyi" target="_blank" rel="noopener noreferrer">丁一的 Quaily</a></span></footer>
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const chapters = [
+      {id:'tech',number:'01',title:'科技快讯',context:'Amazon 与韩国监管消息发表于 10 月 28 日（48 小时内）；Samsung 消息发表于 29 日。',stories:[
+        {tag:'家居硬件',note:'10 月 28 日 · 48 小时内',title:'Amazon 发布五款新 Alexa 设备，Echo Show 16 把家居控制与娱乐放到同一屏',summary:'设计师怎么看：Echo Show 16 支持家庭日程、照片、智能家居地图与 Fire TV。语音对话在屏幕上以卡片延续，跨设备任务需要一致的状态与明确的隐私提示。',sources:[['Amazon 官方','https://www.aboutamazon.com/news/devices/new-alexa-devices-2026']],image:'assets/2026-10-30/brief30-amazon.png',alt:'Amazon 官方展示的五款新 Alexa 家居设备'},
+        {tag:'支付体验',title:'Samsung Wallet 在美国加入 Rakuten 返现与 Samsung Cash 兑换',summary:'设计师怎么看：返现从发现、使用到兑现集中在钱包里，但活动资格仅面向符合条件的美国 Galaxy 用户。金融权益页必须让适用地区、到账规则与限制在支付前可见。',sources:[['Samsung 官方','https://samsungmobilepress.com/articles/samsung-wallet-cash-back-experience-rakuten-samsung-cash']]},
+        {tag:'平台规则',note:'10 月 28 日 · 48 小时内',title:'韩国监管机构因应用内支付限制处罚 Google 与 Apple',summary:'设计师怎么看：合计罚款约 637 亿韩元，并要求纠正相关做法。支付路径不是纯 UI 选择；多种支付方式的价格、跳转、安全提示与退款预期都受平台规则影响。',sources:[['韩国政府公报','https://m.korea.kr/briefing/pressReleaseView.do?newsId=156786878&pWise=mSub&pWiseSub=C2'],['韩联社','https://en.yna.co.kr/view/AEN20261028010000320']]}
+      ],takeaway:'今天的科技消息落在三种真实入口：家庭屏幕、移动钱包和应用商店。产品团队不能只追求入口更短，还要说明对话卡片如何延续、返现怎样兑现、付款路径由谁决定。跨设备和跨平台的体验，最终都要靠明确的状态与规则建立信任。'},
+      {id:'design',number:'02',title:'设计与工具',context:'Figma 与 Canva 消息发表于 10 月 29 日；GitHub 与 Adobe 更新发表于 28 日（48 小时内）。',stories:[
+        {tag:'模型研究 · 可关注',title:'Figma 公开原生画布编辑模型的训练方法',summary:'可关注：Figma 将设计表示为原生文件结构，让模型学会可回写画布的修改。这是研究进展，不是今天新开放的 Agent；评估时应看图层、组件和约束能否保持可编辑。',sources:[['Figma Blog','https://www.figma.com/blog/training-a-figma-fluent-editing-model/']]},
+        {tag:'AI 编辑 · 可试用',title:'Canva Brush 开始支持 Canva AI 中的部分设计编辑',summary:'可试用：目前面向 Canva Pro 的受支持编辑任务，范围将逐步扩大。拿一张真实活动图试对象选择、局部修改和二次编辑，比只看生成速度更有价值。',sources:[['Canva 官方','https://www.canva.com/newsroom/news/canva-brush/']]},
+        {tag:'流程编辑 · 可试用',note:'10 月 28 日 · 48 小时内',title:'Adobe Workfront Fusion 更新场景编辑器与执行轨迹',summary:'可试用：新编辑器提供紧凑视图、迷你地图、撤销与 Live Trail；组织未必都已看到切换入口。复杂流程的设计重点是定位错误、预览批量替换影响，以及随时回到旧版。',sources:[['Adobe 官方','https://experienceleague.adobe.com/en/docs/workfront-fusion/using/fusion-release-activity/fusion-releases-2026/fusion-2026-10-26']]},
+        {tag:'设计交付 · 公测',note:'10 月 28 日 · 48 小时内',title:'GitHub Issue Artifacts 公测，可把原型链接与可预览 HTML 附到议题',summary:'可关注：研究、决策和交互演示能跟开发任务留在同一上下文。HTML 在网页议题中可预览，但 Copilot App 中的创建与查看仍待支持，团队先核对协作入口。',sources:[['GitHub Changelog','https://github.blog/changelog/2026-10-28-issue-artifacts-are-now-in-public-preview/']]}
+      ],takeaway:'设计工具正在争夺的不是首屏生成，而是结构化编辑与可追溯交付。Figma 和 Canva 都把模型训练贴近画布对象，Adobe 强调复杂流程中的定位与回退，GitHub 则把设计证据放到开发现场。值得优先试的，是能保留真实图层、状态和决策记录的能力；只会产出漂亮静态图的热闹要谨慎。'},
+      {id:'ai',number:'03',title:'AI 观察',context:'OpenAI、Google、Meta 消息发表于 10 月 29 日；GitHub 更新发表于 28 日（48 小时内）。',stories:[
+        {tag:'模型规范',title:'OpenAI 更新 Model Spec，明确意图忠实、透明与人的自主性',summary:'对设计/产品工作的影响：新规范将忠实于人的意图、减少伤害、诚实透明、人的自主性和关怀列为核心价值。做 Agent 流程时，不能只写“完成任务”，还应设计解释、确认与撤销。',sources:[['OpenAI 官方','https://openai.com/index/updated-model-spec/']]},
+        {tag:'文件工作流',title:'Gemini 允许在聊天中直接预览与编辑文件',summary:'对设计/产品工作的影响：PDF 在网页和移动端可编辑；文档、表格、幻灯片、代码等当前只支持网页。聊天与文件视图的切换更少，但修改范围、版本和人工复核需要更清楚。',sources:[['Google Blog','https://blog.google/innovation-and-ai/products/gemini-app/edit-files-directly/']],image:'assets/2026-10-30/brief30-gemini.png',alt:'Google 官方展示的 Gemini 文件编辑界面'},
+        {tag:'区域试水',title:'Meta 的 AI 穿搭应用 Style Sketch 在东南亚三国上架',summary:'对设计/产品工作的影响：应用从用户现有照片建立衣橱并推荐搭配，目前仅见于印尼、新加坡和泰国；尚无更广泛发布计划。个人照片与体型相关数据的授权、删除和推荐解释值得重点观察。',sources:[['TechCrunch','https://techcrunch.com/2026/10/29/meta-quietly-launches-an-ai-fashion-app-called-style-sketch/']]},
+        {tag:'多代理 · 公测',note:'10 月 28 日 · 48 小时内',title:'GitHub Copilot App 推出 Projects 公测与桌面应用操作公测',summary:'对设计/产品工作的影响：项目可汇集仓库、设计稿与聊天上下文；电脑操作在 macOS 和 Windows 公测，控制应用前需获批准。多代理执行要呈现权限、进度、产物与接管点。',sources:[['GitHub Changelog','https://github.blog/changelog/2026-10-28-github-copilot-app-universe-releases/']]}
+      ],takeaway:'AI 产品今天更像可编辑的工作空间，而非单轮问答。文件直接编辑、跨应用项目和个性化推荐都提高了行动能力，也让权限、来源、版本与数据删除更重要。设计师可以先把“AI 建议、用户修改、最终确认、出错恢复”画成完整状态流，再决定聊天框长什么样。'},
+      {id:'game',number:'04',title:'游戏与主机',context:'两款游戏均于 10 月 29 日发售；语言与价格请以所在地区商店为准。',stories:[
+        {tag:'PS5 / PC · 新作',title:'《影之刃零》正式发售，登陆 PS5 与 PC',summary:'玩家怎么看：Steam 国区数字标准版据报道为 268 元，商店标注支持简体中文配音、界面和字幕。首日先看自己平台的性能与战斗反馈；Steam 页面也标注第三方 DRM，购买前可核对。',sources:[['Steam 商店','https://store.steampowered.com/app/4115450/Phantom_Blade_Zero/'],['IT之家','https://www.ithome.com/1/019/318.htm']],image:'assets/2026-10-30/brief30-phantom.jpg',alt:'《影之刃零》Steam 官方商店图'},
+        {tag:'叙事冒险 · 复刻',title:'《与狼同行：复刻版》（The Wolf Among Us Remastered）上线 Steam',summary:'玩家怎么看：它重做画面并加入黑白 Noir 模式，适合没玩过原版的人关注；但 Steam 当前未列简体中文支持。重剧情玩家先确认语言能否接受，再考虑首发折扣。',sources:[['Steam 商店','https://store.steampowered.com/app/3884860/The_Wolf_Among_Us_Remastered/?l=schinese']]}
+      ],takeaway:'今天的单机重点是两种购买判断：《影之刃零》看实玩手感与性能，《与狼同行：复刻版》先看语言门槛和新增内容是否值得重买。新作首日评价变化很快，不宜把预告表现或早期分数直接当最终体验。'},
+      {id:'ev',number:'05',title:'国产新能源汽车',context:'以下均为 10 月 29 日正式上市消息；权益价格请以适用车型与活动条件为准。',stories:[
+        {tag:'新车上市',title:'小鹏 MONA L05 正式上市，限时价 13.98 万元起',summary:'产品体验怎么看：官方公布纯电和超级增程多个版本，13.98 万元对应纯电 560 Plus。下单页应把动力形式、续航版本、限时权益和交付预期并列，避免起售价掩盖真实选择成本。',sources:[['小鹏汽车官方','https://www.xiaopeng.com/news/company_news/5606.html']]},
+        {tag:'新车上市',title:'阿维塔 07L Max 纯电版上市，指导价 22.99 万元起',summary:'产品体验怎么看：报道给出 21.59 万元起的限时权益价，并提及华为乾崑 ADS 5。试驾时重点体验辅助驾驶交接、车机任务层级和价格权益条件，不要把限时价当长期指导价。',sources:[['IT之家','https://www.ithome.com/1/019/716.htm']]}
+      ],takeaway:'两款新车都把“限时价”放在传播前排，但用户最终要买的是某个具体动力和配置版本。价格页应先说明权益触发条件，再解释座舱与辅助驾驶能力的适用边界；试驾反馈比一串参数更能支持决策。'}
+    ];
+    const resources = [
+      {name:'GitHub Issue Artifacts 命令文档',detail:'看设计稿、HTML 演示与任务议题如何连起来。',href:'https://cli.github.com/manual/gh_issue_artifact',icon:'blocks'},
+      {name:'Claude Design 迁移指南',detail:'团队有旧项目时核对 12 月 14 日关闭前的迁移与评论留存。',href:'https://support.claude.com/en/articles/17440474-move-from-standalone-claude-design-to-claude',icon:'archive'},
+      {name:'Moonvy 设计素材周刊',detail:'需要新素材时按主题翻找，先看版权与适用范围。',href:'https://moonvy.com/blog/tags/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90%E5%91%A8%E5%88%8A/',icon:'library'},
+      {name:'小鹏 MONA L05 配置表',detail:'比较动力、续航和座舱配置，别只看起售价。',href:'https://www.xiaopeng.com/l05/configuration.html',icon:'car-front'},
+      {name:'Steam 近期新品',detail:'观察新作评价与语言标注，发售首日先别急着跟分数走。',href:'https://store.steampowered.com/explore/new/',icon:'gamepad-2'}
+    ];
+    const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+    const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
+    const storyHTML = (story,index) => `<article class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
+    const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
+    document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>GitHub 命令文档适合做设计交付试验，Moonvy 留作素材库。Claude Design 迁移指南先给仍有旧项目的团队；车辆配置表和 Steam 新品页用来核对购买条件，不必急着下单。</p></div></div></section><div class="section-break"></div>`;
+    const chapterNav = document.querySelector('.chapter-nav');
+    const newsContent = document.getElementById('sections');
+    function updateChapterNav() {
+      const bounds = newsContent.getBoundingClientRect();
+      const topOffset = document.querySelector('.topbar').offsetHeight;
+      chapterNav.classList.toggle('visible', bounds.top <= topOffset + 180 && bounds.bottom > topOffset);
+    }
+    window.addEventListener('scroll', updateChapterNav, {passive:true});
+    window.addEventListener('resize', updateChapterNav);
+    const links = [...document.querySelectorAll('.chapter-nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (current) links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current.target.id));
+    },{rootMargin:'-115px 0px -55% 0px'});
+    document.querySelectorAll('.section').forEach(section=>observer.observe(section));
+    if (window.lucide) lucide.createIcons();
+    updateChapterNav();
+  </script>
+</body>
+</html>
