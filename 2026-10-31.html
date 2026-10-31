@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Biscay 每日晨报，2026 年 10 月 31 日。科技、设计工具、AI、单机游戏与国产新能源汽车。">
+  <title>今日晨报 · 2026.10.31</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #08090b;
+      --surface: #1d1e22;
+      --text: #f7f8f8;
+      --secondary: #b9bbc2;
+      --quiet: #8d9098;
+      --divider: #292b31;
+      --lime: #c3c5ff;
+      --mint: #b6b9ec;
+      --coral: #a3a6b2;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; background: var(--canvas); color: var(--text); font: 15px/1.72 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--lime); }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    svg { width: 19px; height: 19px; stroke-width: 1.8; }
+    .wrap { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 66px; background: #08090b; }
+    .topbar .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 850; font-size: 15px; white-space: nowrap; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7f8f8; color: #111215; border-radius: 9px; font-size: 20px; line-height: 1; }
+    .topbar-date { margin-left: auto; color: var(--quiet); font-size: 12px; white-space: nowrap; }
+    .edition { padding: 44px 0 35px; }
+    .edition-kicker { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: 1.5px; }
+    .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
+    .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+    .lead { position: relative; min-height: 430px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead-image-link { position: absolute; inset: 0; display: block; }
+    .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .lead::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,11,.98) 0%, rgba(8,9,11,.93) 36%, rgba(8,9,11,.58) 58%, rgba(8,9,11,.08) 84%), linear-gradient(0deg, rgba(8,9,11,.72), transparent 56%); pointer-events: none; }
+    .lead-copy { position: relative; z-index: 1; min-height: 430px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 640px; }
+    .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
+    .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
+    .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-body-link:hover h2, .lead-body-link:focus-visible h2 { color: var(--lime); }
+    .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
+    .lead-link svg { width: 15px; height: 15px; }
+    .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
+    .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
+    .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
+    .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .highlights { padding: 0 0 42px; }
+    .highlights .micro-label { display: block; margin-bottom: 14px; }
+    .highlights ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; margin: 0; padding: 0; list-style: none; counter-reset: highlight; }
+    .highlights li { counter-increment: highlight; display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--divider); font-size: 13px; line-height: 1.65; color: var(--secondary); }
+    .highlights li::before { content: counter(highlight, decimal-leading-zero); flex: none; color: var(--quiet); font-size: 11px; font-weight: 800; padding-top: 2px; }
+    .highlights a:hover { color: var(--lime); }
+    .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
+    .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
+    .chapter-nav .wrap::-webkit-scrollbar { display: none; }
+    .chapter-nav a { flex: none; white-space: nowrap; color: #a9abb3; font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 9px; }
+    .chapter-nav a:hover, .chapter-nav a.active { color: #f7f8f8; background: #292b31; }
+    .content { width: min(1060px, calc(100% - 64px)); margin: 0 auto; }
+    .section { padding: 76px 0 68px; scroll-margin-top: 115px; }
+    .section-head { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: end; gap: 18px; margin-bottom: 24px; }
+    .chapter-number { align-self: start; color: var(--coral); font-size: 12px; font-weight: 850; padding-top: 13px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 3.5vw, 46px); line-height: 1.2; font-weight: 800; }
+    .section-context { margin: 0 0 27px 98px; color: var(--quiet); font-size: 13px; }
+    .story { position: relative; display: grid; grid-template-columns: 80px minmax(0,1fr) 172px; gap: 18px; padding: 28px 0; align-items: start; }
+    .story + .story::before { content: ""; position: absolute; top: 0; left: 98px; right: 0; height: 1px; background: var(--divider); }
+    .story:not(.with-image) .story-content { grid-column: 2 / -1; }
+    .story-index { color: var(--quiet); font-size: 12px; font-weight: 800; padding-top: 4px; }
+    .story-media { grid-column: 3; grid-row: 1; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: #1d1e22; }
+    .story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-content { grid-column: 2; grid-row: 1; min-width: 0; }
+    .story-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+    .story-type { color: #c9cbd4; background: #1f2026; border-radius: 7px; padding: 1px 7px; font-size: 11px; font-weight: 800; }
+    .story-note { color: #d4b685; font-size: 10px; font-weight: 700; }
+    .story-note::before { content: "·"; margin-right: 7px; color: var(--quiet); }
+    .story h3 { margin: 0 0 9px; font-size: 21px; line-height: 1.42; font-weight: 780; overflow-wrap: anywhere; }
+    .story-body-link { display: block; border-radius: 4px; }
+    .story-body-link:hover h3, .story-body-link:focus-visible h3 { color: var(--lime); }
+    .story p { margin: 0; }
+    .story-summary { color: var(--secondary); font-size: 13px; line-height: 1.78; }
+    .story-sources { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 15px; color: var(--quiet); font-size: 12px; }
+    .story-sources a { color: var(--quiet); }
+    .story-sources a:hover { color: var(--secondary); }
+    .takeaway { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 18px; padding-top: 24px; }
+    .takeaway .arrow { font-size: 26px; line-height: 1; color: var(--coral); }
+    .takeaway b { display: block; font-size: 11px; color: var(--lime); margin-bottom: 6px; }
+    .takeaway p { margin: 0; max-width: 850px; font-size: 14px; line-height: 1.83; color: #d4d5db; }
+    .section-break { width: 100%; height: 1px; background: var(--divider); }
+    .resources { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 34px; margin-left: 98px; }
+    .resource { position: relative; display: flex; gap: 13px; padding: 17px 0 19px; }
+    .resource:nth-child(n+3)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+    .resource svg { color: var(--mint); width: 17px; height: 17px; flex: none; margin-top: 4px; }
+    .resource strong { display: block; font-size: 15px; line-height: 1.4; }
+    .resource small { display: block; color: var(--quiet); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+    .endnote { padding: 44px 0 88px; }
+    .endnote .micro-label { display: block; margin-bottom: 12px; }
+    .endnote p { margin: 0; max-width: 920px; font-size: clamp(23px, 2.8vw, 35px); line-height: 1.55; font-weight: 720; }
+    .endnote em { font-style: normal; color: var(--lime); }
+    .footer { padding: 24px 0 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--quiet); font-size: 11px; }
+    .footer a { color: var(--secondary); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .wrap, .content { width: calc(100% - 40px); }
+      .story { grid-template-columns: 48px minmax(0,1fr) 140px; gap: 13px; }
+      .section-head { grid-template-columns: 48px 1fr; gap: 13px; }
+      .section-context, .resources { margin-left: 61px; }
+      .takeaway { grid-template-columns: 48px 1fr; gap: 13px; }
+      .story + .story::before { left: 61px; }
+    }
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 105px; }
+      .wrap, .content { width: calc(100% - 32px); }
+      .topbar { height: 58px; }
+      .topbar .wrap { gap: 10px; }
+      .topbar-date { font-size: 11px; }
+      .brand { font-size: 13px; }
+      .chapter-nav { top: 58px; }
+      .chapter-nav .wrap { gap: 5px; min-height: 45px; }
+      .chapter-nav a { font-size: 11px; }
+      .edition { display: block; padding: 27px 0 25px; }
+      .edition h1 { font-size: 41px; }
+      .edition p { font-size: 13px; line-height: 1.75; }
+      .lead { min-height: 0; background: transparent; overflow: visible; }
+      .lead-image-link { position: static; }
+      .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
+      .lead::after { display: none; }
+      .lead-copy { min-height: 0; padding: 19px 0 10px; }
+      .lead h2 { font-size: 25px; }
+      .lead p { font-size: 12px; }
+      .overview { display: block; padding: 26px 0 32px; }
+      .overview p { font-size: 14px; margin-top: 8px; }
+      .highlights { padding-bottom: 30px; }
+      .highlights ol { grid-template-columns: 1fr; }
+      .section { padding: 53px 0 45px; }
+      .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
+      .section-head h2 { font-size: 29px; }
+      .section-context { margin: 0 0 18px 37px; }
+      .story { grid-template-columns: 28px minmax(0,1fr) 96px; gap: 9px; padding: 23px 0; }
+      .story + .story::before { left: 37px; }
+      .story h3 { font-size: 17px; }
+      .story-summary { font-size: 12px; }
+      .story-sources { font-size: 11px; }
+      .takeaway { grid-template-columns: 38px 1fr; gap: 8px; }
+      .takeaway p { font-size: 13px; }
+      .resources { grid-template-columns: 1fr; margin-left: 46px; }
+      .resource:nth-child(n+2)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+      .endnote { padding: 39px 0 60px; }
+      .endnote p { font-size: 23px; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 7px; }
+    }
+    @media (max-width: 380px) {
+      .edition h1 { font-size: 37px; }
+      .lead h2 { font-size: 22px; }
+      .story { grid-template-columns: 22px minmax(0,1fr) 82px; gap: 8px; }
+      .story + .story::before { left: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chapter-nav { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">B</span><span>每日晨报</span></a>
+      <span class="topbar-date">2026 / 10 / 31 · 星期六</span>
+    </div>
+  </header>
+  <main id="top">
+    <div class="wrap">
+      <section class="edition" aria-label="本期晨报">
+        <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 10.31</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。今天看设计系统的变体、网站的 AI 训练边界、两款复古单机，以及新车权益价背后的配置选择。</p></div>
+      </section>
+      <section id="lead-area" aria-label="今日焦点">
+        <div class="lead"><a class="lead-image-link" href="https://store.steampowered.com/app/1799840/Queens_Domain/" target="_blank" rel="noopener noreferrer" aria-label="查看 Queen's Domain Steam 商店"><img src="assets/2026-10-31/brief31-queens-scene.jpg" width="1920" height="1080" alt="Queen's Domain 官方 Steam 商店的复古第一人称游戏画面"></a><div class="lead-copy"><span class="lead-label">游戏焦点 · 10 月 30 日</span><a class="lead-body-link" href="https://store.steampowered.com/app/1799840/Queens_Domain/" target="_blank" rel="noopener noreferrer"><h2>Queen's Domain<br>（复古第一人称奇幻动作 RPG）发售</h2><p>这款以探索和近战为核心的独立游戏已在 Steam 上线。早期评价不错，但样本仍少；喜欢老派地牢体验，可以先看实玩和语言支持再决定。</p></a><a class="lead-link" href="https://store.steampowered.com/app/1799840/Queens_Domain/" target="_blank" rel="noopener noreferrer">查看商店 <i data-lucide="arrow-up-right"></i></a></div></div>
+      </section>
+      <div class="rule"></div>
+      <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天的设计工具消息很具体：Sketch 把组件变体带进测试版，Figma 让代理读 Drive 内容，也让组织内部发布 Weave 工具。AI 领域一边推进开放权重和新算力实验，一边开始讨论网站内容如何表达训练偏好。单机玩家有两款 10 月 30 日上架的复古作品，评价仍需要时间沉淀；国内纯电新车则继续把辅助驾驶和多屏座舱下放到更低价位。对设计师而言，结构、权限、可访问性和价格边界都比新功能宣传更值得细看。</p></section>
+      <section class="highlights" aria-label="先看这 5 条"><span class="micro-label">先看这 5 条</span><ol>
+        <li><a href="https://www.sketch.com/beta/" target="_blank" rel="noopener noreferrer">Sketch 2026.4 测试版加入组件变体，设计系统迁移前先检查文件兼容性。</a></li>
+        <li><a href="https://www.figma.com/release-notes/" target="_blank" rel="noopener noreferrer">Figma 将 Google Drive 连接器开放到所有计划，研究资料可以进入代理工作流。</a></li>
+        <li><a href="https://openai.com/index/helping-websites-express-ai-training-preferences/" target="_blank" rel="noopener noreferrer">OpenAI 宣布未来支持统一 AI 训练偏好信号，网站内容授权边界正被标准化。</a></li>
+        <li><a href="https://store.steampowered.com/app/1799840/Queens_Domain/" target="_blank" rel="noopener noreferrer">Queen's Domain（复古第一人称奇幻动作 RPG）上线，喜欢老派探索可先看实玩。</a></li>
+        <li><a href="https://www.ithome.com/1/020/012.htm" target="_blank" rel="noopener noreferrer">2027 款东风奕派 007 上市，10.99 万元起为限时补贴价，配置与权益要分开看。</a></li>
+      </ol></section>
+    </div>
+    <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
+    <div class="content"><div id="sections"></div>
+      <section class="endnote" id="endnote"><span class="micro-label">给 UI 设计师的一句话</span><p>今天值得带走的判断是：<em>功能越自动化，越要让结构和边界可见。</em> 设计工具要保留变体与来源，AI 要讲清内容许可和结果可用性；购车与游戏页面则要把权益条件、语言和真实评价放在醒目的位置。</p></section>
+    </div>
+  </main>
+  <footer class="footer wrap"><div>© 2026 Biscay · 本页按 10 月 31 日晨报整理，原始信息以来源页面为准。</div><span>长期阅读：<a href="https://www.ftium4.com/" target="_blank" rel="noopener noreferrer">ftium4</a> · <a href="https://quaily.com/dingyi" target="_blank" rel="noopener noreferrer">丁一的 Quaily</a></span></footer>
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const chapters = [
+      {id:'tech',number:'01',title:'科技快讯',context:'Fitbit 消息发表于 10 月 30 日；Apple 与 Microsoft 消息发表于 29 日（48 小时内）。',stories:[
+        {tag:'可穿戴',title:'Google Fitbit Edge 开售，用更大屏幕和实体侧键改善运动查看',summary:'设计师怎么看：官方强调一眼可读的数据显示与实体按键，部分健康功能仍需要 Premium 订阅。可穿戴界面应先保证运动中可看、可按，再考虑信息密度。',sources:[['Google Blog','https://blog.google/products-and-platforms/devices/fitbit/google-fitbit-edge-on-shelves-now/']],image:'assets/2026-10-31/brief31-fitbit-square.png',alt:'Google 官方展示的 Fitbit Edge 手环与不同表带'},
+        {tag:'平台规则',note:'10 月 29 日 · 48 小时内',title:'Apple 调整台湾地区 App Store 标准交易佣金，10 月 31 日起降至 26%',summary:'设计师怎么看：调整只涉及台湾地区店面，不能推断所有地区价格同步变化。跨区订阅和内购页应把地区、税费、续费金额与用户实际支付条件讲清楚。',sources:[['Apple Developer','https://developer.apple.com/news/?id=w9mxlhek']]},
+        {tag:'浏览器性能',note:'10 月 29 日 · 48 小时内',title:'Microsoft Edge 推出 Windows 加速应用启动机制',summary:'设计师怎么看：浏览器试图缩短从点击到可用窗口的等待，但后台预热和启动优化要与内存占用、状态恢复一起评估。产品启动页不应只测首屏出现时间。',sources:[['Microsoft Edge Blog','https://blogs.windows.com/msedgedev/2026/10/29/edge-is-faster-on-windows-with-accelerated-app-launches/']]}
+      ],takeaway:'今天的科技新闻分别触及硬件交互、平台分成和启动性能。表面是更快、更便宜、更易操作，落到体验上却要核对订阅条件、地区边界和后台成本。设计师应把这些限制放到决策点，而不是藏在说明页。'},
+      {id:'design',number:'02',title:'设计与工具',context:'Figma 与 Sketch Beta 更新发表于 10 月 30 日；Sketch 网页端更新发表于 29 日（48 小时内）。',stories:[
+        {tag:'设计系统 · 测试中',title:'Sketch 2026.4 Beta 加入组件变体与 Sections',summary:'可试用：组件现在可按状态、主题、尺寸组织变体；Sections 可整理流程与嵌套画布。测试版打开的文档可能不兼容旧版，先用副本试迁移和实例替换。',sources:[['Sketch Beta','https://www.sketch.com/beta/']]},
+        {tag:'资料连接 · 可试用',title:'Figma 代理的 Google Drive 连接器开放到所有计划',summary:'可试用：设计代理和 Make 可引用 Drive 研究材料、真实数据与素材，也能在文件内创建 Drive 文件。先用非敏感样本验证权限范围、引用准确性和更新时效。',sources:[['Figma Release Notes','https://www.figma.com/release-notes/']]},
+        {tag:'团队工具 · 可关注',title:'Figma Weave 工具支持组织内部发布',summary:'可关注：团队自制的 Weave 工具可出现在 Figma 工具列表中，但内部发布仅限 Organization 和 Enterprise 计划。与其做一次性生成模板，更值得沉淀可复用的品牌流程。',sources:[['Figma Release Notes','https://www.figma.com/release-notes/']]},
+        {tag:'文档浏览 · 可试用',note:'10 月 29 日 · 48 小时内',title:'Sketch 网页端增加三档文档网格尺寸',summary:'可试用：缩略图可选小、中、大，并记住选择；小尺寸方便扫大量文件，大尺寸更适合视觉辨认。团队文档多时，列表密度和封面识别速度同样影响协作效率。',sources:[['Sketch Changelog','https://www.sketch.com/changelog/web-grid-sizes/']]}
+      ],takeaway:'设计工具一边补齐设计系统结构，一边让代理读取真实工作材料。Sketch 的变体值得拿现有按钮组件试迁移，Figma 的 Drive 连接需要先检查授权与资料准确性。组织发布工具的价值在于稳定复用，不在于多做一个生成入口；浏览密度这类小改动也可能显著降低协作摩擦。'},
+      {id:'ai',number:'03',title:'AI 观察',context:'OpenAI 与 Google 消息发表于 10 月 30 日；Mistral 与 Meta 消息发表于 29 日（48 小时内）。',stories:[
+        {tag:'内容授权 · 计划中',title:'OpenAI 宣布支持网站统一 AI 训练偏好信号，尚未实施',summary:'对设计/产品工作的影响：站长未来可在 robots.txt 以共同信号表达训练选择，OpenAI 计划未来数月实现，现有爬虫控制仍有效。内容产品要把训练许可与搜索索引、页面公开性分开设计。',sources:[['OpenAI 官方','https://openai.com/index/helping-websites-express-ai-training-preferences/']]},
+        {tag:'开放权重',note:'10 月 29 日 · 48 小时内',title:'Mistral 发布 Large 4 改进版权重，强化代码和防御安全能力',summary:'对设计/产品工作的影响：这是早前公测模型的权重开放，不是首次发布；企业可评估自托管和不同推理档位。模型选型不只看榜单，还要测成本、可审计性与真实任务表现。',sources:[['Mistral 官方','https://mistral.ai/news/mistral-large-4-oss/']]},
+        {tag:'算力实验',title:'Google 轨道 TPU 完成首次模型响应，仍是原型验证',summary:'对设计/产品工作的影响：Project Suncatcher 在卫星上用 Gemma 4 生成了首次回复，后续还需测热与辐射可靠性。它展示算力基础设施探索，不代表太空 AI 服务已可用。',sources:[['Google Blog','https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-satellite-response/']]},
+        {tag:'无障碍',note:'10 月 29 日 · 48 小时内',title:'Meta 与加拿大 CNIB 合作，让视障群体参与 AI 眼镜体验改进',summary:'对设计/产品工作的影响：合作包括社区反馈、培训和通过就业项目捐赠设备。语音与视觉辅助不能只做演示场景，真实可用性要由目标用户参与验证。',sources:[['Meta Newsroom','https://about.fb.com/news/2026/10/the-future-is-for-everyone-meta-and-cnib-partner-to-support-canadians-who-are-blind-deafblind-or-have-low-vision/']]}
+      ],takeaway:'今天的 AI 消息同时指向能力和边界：开放权重扩大部署选择，轨道计算仍在早期试验，网站训练偏好尚待落地。设计师现在能做的是明确内容许可、模型运行位置、执行状态和人工复核；无障碍能力则需要实际用户共创，而非仅靠模型演示判断。'},
+      {id:'game',number:'04',title:'游戏与主机',context:'两款 Steam 单机均于 10 月 30 日发售；价格、语言与评价以所在地区商店为准。',stories:[
+        {tag:'动作 RPG · 新作',title:"Queen's Domain（复古第一人称奇幻动作 RPG）登陆 Steam",summary:'玩家怎么看：以地牢探索、近战和复古视觉为卖点，适合喜欢老派动作 RPG 的玩家。初期好评样本还少，先看实玩、性能和商店语言表，再决定是否入手。',sources:[['Steam 商店','https://store.steampowered.com/app/1799840/Queens_Domain/']],image:'assets/2026-10-31/brief31-queens-square.jpg',alt:"Queen's Domain 官方 Steam 商店的第一人称游戏画面"},
+        {tag:'恐怖冒险 · 复刻',title:'Dead of the Brain（1992 年日式 PC-98 恐怖冒险游戏复刻）上线 Steam',summary:'玩家怎么看：点按式调查、僵尸题材和像素画面是核心吸引力；目前评价数量很少。重剧情玩家尤其要先核对商店语言支持，以及对暴力内容的接受程度。',sources:[['Steam 商店','https://store.steampowered.com/app/5056390/Dead_of_the_Brain/']]}
+      ],takeaway:'今天的两款新作都偏向复古趣味，而非靠规模取胜。喜欢探索的玩家可看第一款实玩，偏爱老派恐怖叙事的玩家可看第二款；两者都应等更充分的评价，并先确认语言门槛。'},
+      {id:'ev',number:'05',title:'国产新能源汽车',context:'东风奕派消息发表于 10 月 30 日；智己预售始于 29 日（48 小时内）。',stories:[
+        {tag:'新车上市',title:'2027 款东风奕派 007 上市，指导价 11.59 万元起',summary:'产品体验怎么看：两款配置的限时补贴价为 10.99 万至 12.99 万元，高配版本提供激光雷达与辅助驾驶功能。购买时要把补贴期限、具体配置、城区功能开放范围和安全接管体验逐项核对。',sources:[['IT之家','https://www.ithome.com/1/020/012.htm'],['东风奕派官方','https://www.yipai.com.cn/brandindex']]},
+        {tag:'预售 · 可关注',note:'10 月 29 日 · 48 小时内',title:'智己 LS8 NEO 纯电开启预售，权益价 24.98 万元起',summary:'产品体验怎么看：这是预售权益价而非最终上市价，官方信息显示 11 月 5 日正式上市。多屏座舱和线控底盘值得试驾，但先确认前后排屏幕任务是否互不打扰，以及权益随版本如何变化。',sources:[['汽车之家','https://www.autohome.com.cn/news/202610/1318049.html']]}
+      ],takeaway:'今天的两款车都把配置能力与条件价格放在传播焦点。购车决策不能只比较“起”字后的数字：先确认目标版本、补贴门槛和上市状态，再到车里检验辅助驾驶接管、屏幕分工与常用操作。'}
+    ];
+    const resources = [
+      {name:'Moonvy 设计素材周刊',detail:'按主题收集素材，使用前核对授权。',href:'https://moonvy.com/blog/tags/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90%E5%91%A8%E5%88%8A/',icon:'library'},
+      {name:'Sketch 路线图',detail:'对照正式版与测试中的能力，规划组件库迁移。',href:'https://www.sketch.com/roadmap/',icon:'blocks'},
+      {name:'W3C 无障碍设计资源',detail:'复核语音辅助、可读性与交互反馈的基本要求。',href:'https://www.w3.org/WAI/',icon:'accessibility'},
+      {name:"Queen's Domain Demo（复古奇幻动作 RPG 试玩版）",detail:'正式购买前先测操作手感和设备性能。',href:'https://store.steampowered.com/app/4081520/Queens_Domain_Demo/',icon:'gamepad-2'},
+      {name:'东风奕派官方车型页',detail:'核对 007 的配置版本与指导价。',href:'https://www.yipai.com.cn/brandindex',icon:'car-front'}
+    ];
+    const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+    const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
+    const storyHTML = (story,index) => `<article class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
+    const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
+    document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>Moonvy 适合补进日常素材库，W3C 资料可用于核对无障碍细节，Sketch 路线图可安排组件变体试验。游戏 Demo 与车型页分别降低首发购买和购车决策的信息差，先试、先核对，再付款。</p></div></div></section><div class="section-break"></div>`;
+    const chapterNav = document.querySelector('.chapter-nav');
+    const newsContent = document.getElementById('sections');
+    function updateChapterNav() {
+      const bounds = newsContent.getBoundingClientRect();
+      const topOffset = document.querySelector('.topbar').offsetHeight;
+      chapterNav.classList.toggle('visible', bounds.top <= topOffset + 180 && bounds.bottom > topOffset);
+    }
+    window.addEventListener('scroll', updateChapterNav, {passive:true});
+    window.addEventListener('resize', updateChapterNav);
+    const links = [...document.querySelectorAll('.chapter-nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (current) links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current.target.id));
+    },{rootMargin:'-115px 0px -55% 0px'});
+    document.querySelectorAll('.section').forEach(section=>observer.observe(section));
+    if (window.lucide) lucide.createIcons();
+    updateChapterNav();
+  </script>
+</body>
+</html>
