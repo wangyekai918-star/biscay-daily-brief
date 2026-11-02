@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Biscay 每日晨报，2026 年 11 月 2 日。科技、设计工具、AI、单机游戏与国产新能源汽车。">
+  <title>今日晨报 · 2026.11.02</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #08090b;
+      --surface: #1d1e22;
+      --text: #f7f8f8;
+      --secondary: #b9bbc2;
+      --quiet: #8d9098;
+      --divider: #292b31;
+      --lime: #c3c5ff;
+      --mint: #b6b9ec;
+      --coral: #a3a6b2;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; background: var(--canvas); color: var(--text); font: 15px/1.72 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--lime); }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    svg { width: 19px; height: 19px; stroke-width: 1.8; }
+    .wrap { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 66px; background: #08090b; }
+    .topbar .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 850; font-size: 15px; white-space: nowrap; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7f8f8; color: #111215; border-radius: 9px; font-size: 20px; line-height: 1; }
+    .topbar-date { margin-left: auto; color: var(--quiet); font-size: 12px; white-space: nowrap; }
+    .edition { padding: 44px 0 35px; }
+    .edition-kicker { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: 1.5px; }
+    .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
+    .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+    .lead { position: relative; min-height: 430px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead-image-link { position: absolute; inset: 0; display: block; }
+    .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .lead::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,11,.98) 0%, rgba(8,9,11,.93) 36%, rgba(8,9,11,.58) 58%, rgba(8,9,11,.08) 84%), linear-gradient(0deg, rgba(8,9,11,.72), transparent 56%); pointer-events: none; }
+    .lead-copy { position: relative; z-index: 1; min-height: 430px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 640px; }
+    .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
+    .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
+    .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-body-link:hover h2, .lead-body-link:focus-visible h2 { color: var(--lime); }
+    .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
+    .lead-link svg { width: 15px; height: 15px; }
+    .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
+    .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
+    .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
+    .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .highlights { padding: 0 0 42px; }
+    .highlights .micro-label { display: block; margin-bottom: 14px; }
+    .highlights ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; margin: 0; padding: 0; list-style: none; counter-reset: highlight; }
+    .highlights li { counter-increment: highlight; display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--divider); font-size: 13px; line-height: 1.65; color: var(--secondary); }
+    .highlights li::before { content: counter(highlight, decimal-leading-zero); flex: none; color: var(--quiet); font-size: 11px; font-weight: 800; padding-top: 2px; }
+    .highlights a:hover { color: var(--lime); }
+    .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
+    .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
+    .chapter-nav .wrap::-webkit-scrollbar { display: none; }
+    .chapter-nav a { flex: none; white-space: nowrap; color: #a9abb3; font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 9px; }
+    .chapter-nav a:hover, .chapter-nav a.active { color: #f7f8f8; background: #292b31; }
+    .content { width: min(1060px, calc(100% - 64px)); margin: 0 auto; }
+    .section { padding: 76px 0 68px; scroll-margin-top: 115px; }
+    .section-head { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: end; gap: 18px; margin-bottom: 24px; }
+    .chapter-number { align-self: start; color: var(--coral); font-size: 12px; font-weight: 850; padding-top: 13px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 3.5vw, 46px); line-height: 1.2; font-weight: 800; }
+    .section-context { margin: 0 0 27px 98px; color: var(--quiet); font-size: 13px; }
+    .story { position: relative; display: grid; grid-template-columns: 80px minmax(0,1fr) 172px; gap: 18px; padding: 28px 0; align-items: start; }
+    .story + .story::before { content: ""; position: absolute; top: 0; left: 98px; right: 0; height: 1px; background: var(--divider); }
+    .story:not(.with-image) .story-content { grid-column: 2 / -1; }
+    .story-index { color: var(--quiet); font-size: 12px; font-weight: 800; padding-top: 4px; }
+    .story-media { grid-column: 3; grid-row: 1; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: #1d1e22; }
+    .story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-content { grid-column: 2; grid-row: 1; min-width: 0; }
+    .story-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+    .story-type { color: #c9cbd4; background: #1f2026; border-radius: 7px; padding: 1px 7px; font-size: 11px; font-weight: 800; }
+    .story-note { color: #d4b685; font-size: 10px; font-weight: 700; }
+    .story-note::before { content: "·"; margin-right: 7px; color: var(--quiet); }
+    .story h3 { margin: 0 0 9px; font-size: 21px; line-height: 1.42; font-weight: 780; overflow-wrap: anywhere; }
+    .story-body-link { display: block; border-radius: 4px; }
+    .story-body-link:hover h3, .story-body-link:focus-visible h3 { color: var(--lime); }
+    .story p { margin: 0; }
+    .story-summary { color: var(--secondary); font-size: 13px; line-height: 1.78; }
+    .story-sources { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 15px; color: var(--quiet); font-size: 12px; }
+    .story-sources a { color: var(--quiet); }
+    .story-sources a:hover { color: var(--secondary); }
+    .takeaway { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 18px; padding-top: 24px; }
+    .takeaway .arrow { font-size: 26px; line-height: 1; color: var(--coral); }
+    .takeaway b { display: block; font-size: 11px; color: var(--lime); margin-bottom: 6px; }
+    .takeaway p { margin: 0; max-width: 850px; font-size: 14px; line-height: 1.83; color: #d4d5db; }
+    .section-break { width: 100%; height: 1px; background: var(--divider); }
+    .resources { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 34px; margin-left: 98px; }
+    .resource { position: relative; display: flex; gap: 13px; padding: 17px 0 19px; }
+    .resource:nth-child(n+3)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+    .resource svg { color: var(--mint); width: 17px; height: 17px; flex: none; margin-top: 4px; }
+    .resource strong { display: block; font-size: 15px; line-height: 1.4; }
+    .resource small { display: block; color: var(--quiet); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+    .endnote { padding: 44px 0 88px; }
+    .endnote .micro-label { display: block; margin-bottom: 12px; }
+    .endnote p { margin: 0; max-width: 920px; font-size: clamp(23px, 2.8vw, 35px); line-height: 1.55; font-weight: 720; }
+    .endnote em { font-style: normal; color: var(--lime); }
+    .footer { padding: 24px 0 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--quiet); font-size: 11px; }
+    .footer a { color: var(--secondary); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .wrap, .content { width: calc(100% - 40px); }
+      .story { grid-template-columns: 48px minmax(0,1fr) 140px; gap: 13px; }
+      .section-head { grid-template-columns: 48px 1fr; gap: 13px; }
+      .section-context, .resources { margin-left: 61px; }
+      .takeaway { grid-template-columns: 48px 1fr; gap: 13px; }
+      .story + .story::before { left: 61px; }
+    }
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 105px; }
+      .wrap, .content { width: calc(100% - 32px); }
+      .topbar { height: 58px; }
+      .topbar .wrap { gap: 10px; }
+      .topbar-date { font-size: 11px; }
+      .brand { font-size: 13px; }
+      .chapter-nav { top: 58px; }
+      .chapter-nav .wrap { gap: 5px; min-height: 45px; }
+      .chapter-nav a { font-size: 11px; }
+      .edition { display: block; padding: 27px 0 25px; }
+      .edition h1 { font-size: 41px; }
+      .edition p { font-size: 13px; line-height: 1.75; }
+      .lead { min-height: 0; background: transparent; overflow: visible; }
+      .lead-image-link { position: static; }
+      .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
+      .lead::after { display: none; }
+      .lead-copy { min-height: 0; padding: 19px 0 10px; }
+      .lead h2 { font-size: 25px; }
+      .lead p { font-size: 12px; }
+      .overview { display: block; padding: 26px 0 32px; }
+      .overview p { font-size: 14px; margin-top: 8px; }
+      .highlights { padding-bottom: 30px; }
+      .highlights ol { grid-template-columns: 1fr; }
+      .section { padding: 53px 0 45px; }
+      .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
+      .section-head h2 { font-size: 29px; }
+      .section-context { margin: 0 0 18px 37px; }
+      .story { grid-template-columns: 28px minmax(0,1fr) 96px; gap: 9px; padding: 23px 0; }
+      .story + .story::before { left: 37px; }
+      .story h3 { font-size: 17px; }
+      .story-summary { font-size: 12px; }
+      .story-sources { font-size: 11px; }
+      .takeaway { grid-template-columns: 38px 1fr; gap: 8px; }
+      .takeaway p { font-size: 13px; }
+      .resources { grid-template-columns: 1fr; margin-left: 46px; }
+      .resource:nth-child(n+2)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+      .endnote { padding: 39px 0 60px; }
+      .endnote p { font-size: 23px; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 7px; }
+    }
+    @media (max-width: 380px) {
+      .edition h1 { font-size: 37px; }
+      .lead h2 { font-size: 22px; }
+      .story { grid-template-columns: 22px minmax(0,1fr) 82px; gap: 8px; }
+      .story + .story::before { left: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chapter-nav { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">B</span><span>每日晨报</span></a>
+      <span class="topbar-date">2026 / 11 / 02 · 星期一</span>
+    </div>
+  </header>
+  <main id="top">
+    <div class="wrap">
+      <section class="edition" aria-label="本期晨报">
+        <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 11.02</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。周末消息不多，今天重点看 Apple 智能的中国落地边界、可复用的设计工作流，以及新势力车企十月交付后的真实体验问题。</p></div>
+      </section>
+      <section id="lead-area" aria-label="今日焦点">
+        <div class="lead"><a class="lead-image-link" href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer" aria-label="查看 Apple 中国官方新闻稿"><img src="assets/2026-11-02/brief02-apple-intelligence.jpg" width="1200" height="630" alt="Apple 官方发布的 Apple 智能中国版新闻配图"></a><div class="lead-copy"><span class="lead-label">今日焦点 · 10 月 31 日</span><a class="lead-body-link" href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer"><h2>Apple 智能将进入中国市场<br>11 月 4 日先开放测试</h2><p>首批功能包括实时翻译、照片消除和写作工具，正式版计划 12 月随 iOS 27.3 推出。本次不含下一代 Siri；千问是部分请求的扩展接入，不等于所有功能都由它提供。</p></a><a class="lead-link" href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer">查看原文 <i data-lucide="arrow-up-right"></i></a></div></div>
+      </section>
+      <div class="rule"></div>
+      <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天最重要的是落地节奏，而不是参数竞赛：Apple 智能中国版先测试、后正式上线，下一代 Siri 仍未在首批名单里。Figma 再次强调把生成过程做成可重复的节点流程，DeepSeek 的主动编码代理也明确还是研究原型。主机资讯以本周发售和会免提醒为主；国产新能源则进入十月交付盘点期。设计师要把“已上线、将测试、计划推出”区分清楚，车机和 AI 产品尤其如此。</p></section>
+      <section class="highlights" aria-label="先看这 5 条"><span class="micro-label">先看这 5 条</span><ol>
+        <li><a href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer">Apple 智能中国版 11 月 4 日开始测试，12 月正式推出；本次不含下一代 Siri。</a></li>
+        <li><a href="https://www.figma.com/blog/the-tldr-on-figma-weave/" target="_blank" rel="noopener noreferrer">Figma 解释 Weave 的节点与分支流程，设计生成开始从一次性结果转向可重复过程。</a></li>
+        <li><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">DeepSeek 开源主动编码代理研究原型，目标是让任务拆分与执行更持续。</a></li>
+        <li><a href="https://blog.playstation.com/2026/10/28/playstation-plus-monthly-games-for-november-dead-island-2-tomb-raider-iv-vi-remastered-monster-train-2/" target="_blank" rel="noopener noreferrer">PS Plus 11 月会免 3 日开始，今天是领取 10 月会免的最后一天。</a></li>
+        <li><a href="https://ir.xiaopeng.com/zh-hans/news-releases/news-release-details/xpeng-announces-vehicle-delivery-results-october-2026" target="_blank" rel="noopener noreferrer">小鹏十月交付 50,237 辆创新高；看交付也要看服务承接。</a></li>
+      </ol></section>
+    </div>
+    <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
+    <div class="content"><div id="sections"></div>
+      <section class="endnote" id="endnote"><span class="micro-label">给 UI 设计师的一句话</span><p>今天值得带走的判断是：<em>用户需要的是明确的可用边界，不是更大的能力承诺。</em> AI 功能要区分测试与正式、自动与人工；设计流程要能重跑和追溯，车机升级要让用户知道何时可用、如何接管。</p></section>
+    </div>
+  </main>
+  <footer class="footer wrap"><div>© 2026 Biscay · 本页按 11 月 2 日晨报整理，原始信息以来源页面为准。</div><span>长期阅读：<a href="https://www.ftium4.com/" target="_blank" rel="noopener noreferrer">ftium4</a> · <a href="https://quaily.com/dingyi" target="_blank" rel="noopener noreferrer">丁一的 Quaily</a></span></footer>
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const chapters = [
+      {id:'tech',number:'01',title:'科技快讯',context:'周末可靠新发布有限；以下区分 10 月 31 日消息与 11 月 1 日生效事项。',stories:[
+        {tag:'系统入口 · 待测试',note:'10 月 31 日',title:'Apple 智能公布中国版上线节奏，11 月 4 日先进入开发者测试',summary:'设计师怎么看：首批是实时翻译、写作工具与照片消除等，不包括下一代 Siri；12 月正式版仍以实际发布为准。体验说明应分清设备、系统版本和功能可用状态。',sources:[['Apple 中国','https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/']]},
+        {tag:'开发者平台',note:'10 月 31 日生效',title:'OpenAI Evals 平台旧评估变为只读，11 月 30 日计划关闭',summary:'设计师怎么看：这是已公告的迁移节点，不是新功能。依赖评估面板的团队要导出数据、检查替代流程；产品后台应把停用时间和迁移去向放在任务入口。',sources:[['OpenAI API 文档','https://developers.openai.com/api/docs/deprecations']]},
+        {tag:'开源开发工具',note:'10 月 31 日',title:'DeepSeek 开源主动编码代理研究原型',summary:'设计师怎么看：仓库说明面向单个 GitHub 项目的持续任务处理，仍是研究原型。未来代理界面更需要任务来源、授权范围、执行历史和人工接管点。',sources:[['DeepSeek GitHub','https://github.com/deepseek-ai/dsh-superagent-prototype']]}
+      ],takeaway:'三条消息都在提醒我们区分能力与可用性：系统功能尚待测试，旧服务已经进入停用流程，代理则仍是原型。设计师应把阶段、条件、回退路径写进界面，而不是只突出“支持 AI”。'},
+      {id:'design',number:'02',title:'设计与工具',context:'周末工具更新较少；保留 10 月 31 日新解读及仍可操作的官方资料，不以旧闻凑条数。',stories:[
+        {tag:'工作流 · 可收藏',note:'10 月 31 日',title:'Figma 解释 Weave 的节点、分支与可打包工具',summary:'可收藏：官方文章展示如何把图像生成、编辑和 Figma Design 连接成可重复流程。这是对现有产品的工作流解读，不是 Weave 首次发布；适合用一个真实活动素材任务试跑。',sources:[['Figma Blog','https://www.figma.com/blog/the-tldr-on-figma-weave/']]},
+        {tag:'设计系统 · 可试用',note:'10 月 30 日更新',title:'Figma Weave 可通过 MCP 访问图像和视频模型',summary:'可试用：官方发布记录列出从 Figma MCP 调用 Weave 模型的能力。建议先用非敏感素材检验权限、可编辑性和导出结果，再考虑放入团队流程。',sources:[['Figma Release Notes','https://www.figma.com/release-notes/']]}
+      ],takeaway:'今天没有必要把周末的稀疏更新包装成“工具爆发”。真正值得试的是能否把生成步骤、素材来源和人工修改保留下来。一个流程如果不能被同事重复执行、也不能追溯授权，就暂时只是演示。'},
+      {id:'ai',number:'03',title:'AI 观察',context:'以 10 月 31 日至 11 月 1 日可核验的官方信息为主。',stories:[
+        {tag:'本地化 · 待测试',note:'10 月 31 日',title:'Apple 智能中国首批能力公布，部分请求可接入千问',summary:'对设计/产品工作的影响：Apple 表示首批核心能力由其模型驱动，千问用于部分扩展请求。不要把“接入千问”写成全量替代；界面需要解释云端处理、授权与实际可用设备。',sources:[['Apple 中国','https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/']]},
+        {tag:'Agent · 研究原型',note:'10 月 31 日',title:'DeepSeek 的 dsh-superagent-prototype 公开代码和运行说明',summary:'对设计/产品工作的影响：它尝试把仓库任务持续拆分给多个工作单元，尚非成熟托管服务。设计代理产品时，应优先呈现任务队列、失败重试和最终责任人。',sources:[['DeepSeek GitHub','https://github.com/deepseek-ai/dsh-superagent-prototype']]},
+        {tag:'平台迁移',note:'10 月 31 日生效',title:'OpenAI 旧 Evals 已只读，评估工作流需要迁移',summary:'对设计/产品工作的影响：官方文档列明 11 月 30 日关闭旧 Evals 面板与 API，并给出迁移方向。AI 产品团队要保留测试集、评分规则与历史结果，避免上线后无法比较模型变化。',sources:[['OpenAI API 文档','https://developers.openai.com/api/docs/deprecations']]}
+      ],takeaway:'今天的 AI 主线不是模型分数，而是发布阶段和运行治理。Apple 的能力尚未正式上线，DeepSeek 的代理仍是实验，OpenAI 的旧评估工具已进入退出期。实际设计可先建立三类状态：谁能用、系统做到了哪一步、失败后由谁接手。'},
+      {id:'game',number:'04',title:'游戏与主机',context:'本周发售与订阅提醒；相关公告发表于 10 月 28–30 日，非过去 48 小时新发布。',stories:[
+        {tag:'本周新作 · 可关注',note:'10 月 30 日公布',title:'ZERO PARADES: Director’s Cut（间谍题材叙事 RPG）预计 11 月 3 日登陆主机',summary:'玩家怎么看：开发商官网列出 11 月 3 日主机版档期，PC 导演剪辑版已推出。这是发售预告，不是评价；喜欢《极乐迪斯科》式叙事可关注，购买前核对语言和首发口碑。',sources:[['ZA/UM 官方','https://zeroparades.com/']]},
+        {tag:'订阅提醒',note:'10 月 28 日公布',title:'PS Plus 十一月会免 3 日开放，十月阵容今天截止领取',summary:'玩家怎么看：十一月包括《死亡岛 2》《古墓丽影 IV–VI 复刻版》和《怪物火车 2》。已有订阅的玩家可先领取十月阵容；续费前再核对所在地区与会员级别。',sources:[['PlayStation Blog','https://blog.playstation.com/2026/10/28/playstation-plus-monthly-games-for-november-dead-island-2-tomb-raider-iv-vi-remastered-monster-train-2/']]}
+      ],takeaway:'今天主机端更像“本周安排”而不是大新闻。叙事新作适合先看语言与首评，PS Plus 用户则应注意领取窗口；发售日和订阅权益都可能因地区不同而变化。'},
+      {id:'ev',number:'05',title:'国产新能源汽车',context:'十月交付数据于 10 月 31 日至 11 月 1 日集中公布；交付量不能直接代表单车体验。',stories:[
+        {tag:'交付 · 新高',note:'11 月 1 日前后',title:'小鹏十月交付 50,237 辆创单月新高，L05 开始规模交付',summary:'产品体验怎么看：官方披露同比增长 20%，L05 于 11 月 1 日开始交付。新车用户除了看配置，还要问交期、辅助驾驶功能开放范围和售后网点承接。',sources:[['小鹏投资者关系','https://ir.xiaopeng.com/zh-hans/news-releases/news-release-details/xpeng-announces-vehicle-delivery-results-october-2026']]},
+        {tag:'交付结构',note:'11 月 1 日',title:'蔚来十月交付 34,246 辆，三品牌贡献差异明显',summary:'产品体验怎么看：蔚来主品牌 18,125 辆、乐道 8,383 辆、萤火虫 7,738 辆。跨品牌看车时，换电权益、服务覆盖与车机功能并不自动相同，需逐款核对。',sources:[['蔚来投资者关系','https://ir.nio.com/zh-hant/news-releases/news-release-details/nio-inc-provides-october-2026-delivery-update']]},
+        {tag:'OTA · 计划中',note:'11 月 1 日',title:'理想十月交付 29,025 辆，预告十一月推送 OTA 9.2',summary:'产品体验怎么看：官方称新版本将升级辅助驾驶模型和座舱 Agent，但尚未推送。已有车主应等具体车型适配与灰度范围，不宜把预告当成现有功能。',sources:[['理想投资者关系','https://ir.lixiang.com/zh-hant/news-releases/news-release-details/li-auto-inc-october-2026-delivery-update']]}
+      ],takeaway:'销量反映的是规模和交付能力，不直接回答“这台车是否适合我”。今天更值得追问的是新车交期、不同品牌服务权益，以及 OTA 从预告到真正可用的时间差。'}
+    ];
+    const resources = [
+      {name:'Moonvy 设计素材周刊',detail:'按主题补充素材库，使用前核对授权。',href:'https://moonvy.com/blog/tags/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90%E5%91%A8%E5%88%8A/',icon:'library'},
+      {name:'Figma Weave 官方帮助',detail:'核对计划、权限和工具使用条件。',href:'https://help.figma.com/hc/en-us/articles/35965787376919-Figma-Weave-FAQ',icon:'blocks'},
+      {name:'OpenAI API 停用时间表',detail:'给评估与提示词迁移列一个检查清单。',href:'https://developers.openai.com/api/docs/deprecations',icon:'calendar-days'},
+      {name:'ZERO PARADES: Director’s Cut（间谍题材叙事 RPG）Steam 页',detail:'先核对 PC 版语言与玩家评价。',href:'https://store.steampowered.com/app/2863680/ZERO_PARADES/',icon:'gamepad-2'},
+      {name:'W3C 无障碍设计资源',detail:'复核语音辅助与状态反馈的基本要求。',href:'https://www.w3.org/WAI/',icon:'accessibility'}
+    ];
+    const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+    const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
+    const storyHTML = (story,index) => `<article class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
+    const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
+    document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>Weave 帮助页适合确认团队能否真正复用流程，OpenAI 时间表适合安排迁移。游戏商店页可核对语言和评价，Moonvy 与 W3C 资料则可进入长期素材与设计检查清单。</p></div></div></section><div class="section-break"></div>`;
+    const chapterNav = document.querySelector('.chapter-nav');
+    const newsContent = document.getElementById('sections');
+    function updateChapterNav() {
+      const bounds = newsContent.getBoundingClientRect();
+      const topOffset = document.querySelector('.topbar').offsetHeight;
+      chapterNav.classList.toggle('visible', bounds.top <= topOffset + 180 && bounds.bottom > topOffset);
+    }
+    window.addEventListener('scroll', updateChapterNav, {passive:true});
+    window.addEventListener('resize', updateChapterNav);
+    const links = [...document.querySelectorAll('.chapter-nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (current) links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current.target.id));
+    },{rootMargin:'-115px 0px -55% 0px'});
+    document.querySelectorAll('.section').forEach(section=>observer.observe(section));
+    if (window.lucide) lucide.createIcons();
+    updateChapterNav();
+  </script>
+</body>
+</html>
