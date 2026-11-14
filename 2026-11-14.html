@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Biscay 每日晨报，2026 年 11 月 14 日。科技、设计工具、AI、单机游戏与国产新能源汽车。">
+  <title>今日晨报 · 2026.11.14</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #08090b;
+      --surface: #1d1e22;
+      --text: #f7f8f8;
+      --secondary: #b9bbc2;
+      --quiet: #8d9098;
+      --divider: #292b31;
+      --lime: #c3c5ff;
+      --mint: #b6b9ec;
+      --coral: #a3a6b2;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; background: var(--canvas); color: var(--text); font: 15px/1.72 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--lime); }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    svg { width: 19px; height: 19px; stroke-width: 1.8; }
+    .wrap { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 66px; background: #08090b; }
+    .topbar .wrap { height: 100%; display: flex; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 850; font-size: 15px; white-space: nowrap; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7f8f8; color: #111215; border-radius: 9px; font-size: 20px; line-height: 1; }
+    .topbar-date { margin-left: auto; color: var(--quiet); font-size: 12px; white-space: nowrap; }
+    .edition { padding: 44px 0 35px; }
+    .edition-kicker { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: 1.5px; }
+    .edition h1 { margin: 7px 0 0; font-size: clamp(40px, 5vw, 70px); line-height: 1.07; font-weight: 850; letter-spacing: 0; }
+    .edition p { max-width: 575px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+    .lead { position: relative; min-height: 330px; overflow: hidden; background: #1b1c22; border-radius: 16px; }
+    .lead-image-link { position: absolute; inset: 0; display: block; }
+    .lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .lead::after { display: none; }
+    .lead-copy { position: relative; z-index: 1; min-height: 330px; padding: 36px 42px; display: flex; flex-direction: column; justify-content: end; align-items: start; max-width: 760px; }
+    .lead-label { font-size: 11px; font-weight: 850; color: var(--lime); letter-spacing: 1px; }
+    .lead h2 { margin: 11px 0 11px; font-size: clamp(29px, 3vw, 43px); line-height: 1.23; font-weight: 800; }
+    .lead p { margin: 0; max-width: 555px; font-size: 14px; line-height: 1.8; color: #e1e2e6; }
+    .lead-body-link:hover h2, .lead-body-link:focus-visible h2 { color: var(--lime); }
+    .lead-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 19px; color: var(--lime); font-size: 12px; font-weight: 750; }
+    .lead-link svg { width: 15px; height: 15px; }
+    .rule { width: 100%; height: 1px; margin-top: 32px; background: var(--divider); }
+    .overview { display: grid; grid-template-columns: 160px 1fr; gap: 35px; padding: 34px 0 40px; }
+    .micro-label { color: var(--lime); font-size: 11px; font-weight: 850; letter-spacing: .6px; }
+    .overview p { margin: 0; max-width: 900px; font-size: 17px; line-height: 1.85; color: #d6d7dc; }
+    .highlights { padding: 0 0 42px; }
+    .highlights .micro-label { display: block; margin-bottom: 14px; }
+    .highlights ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; margin: 0; padding: 0; list-style: none; counter-reset: highlight; }
+    .highlights li { counter-increment: highlight; display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--divider); font-size: 13px; line-height: 1.65; color: var(--secondary); }
+    .highlights li::before { content: counter(highlight, decimal-leading-zero); flex: none; color: var(--quiet); font-size: 11px; font-weight: 800; padding-top: 2px; }
+    .highlights a:hover { color: var(--lime); }
+    .chapter-nav { position: fixed; top: 66px; left: 0; right: 0; z-index: 20; background: #111216; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .24s ease, transform .24s ease, visibility .24s; }
+    .chapter-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .chapter-nav .wrap { display: flex; gap: 7px; align-items: center; min-height: 51px; overflow-x: auto; scrollbar-width: none; }
+    .chapter-nav .wrap::-webkit-scrollbar { display: none; }
+    .chapter-nav a { flex: none; white-space: nowrap; color: #a9abb3; font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 9px; }
+    .chapter-nav a:hover, .chapter-nav a.active { color: #f7f8f8; background: #292b31; }
+    .content { width: min(1060px, calc(100% - 64px)); margin: 0 auto; }
+    .section { padding: 76px 0 68px; scroll-margin-top: 115px; }
+    .section-head { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: end; gap: 18px; margin-bottom: 24px; }
+    .chapter-number { align-self: start; color: var(--coral); font-size: 12px; font-weight: 850; padding-top: 13px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 3.5vw, 46px); line-height: 1.2; font-weight: 800; }
+    .section-context { margin: 0 0 27px 98px; color: var(--quiet); font-size: 13px; }
+    .story { position: relative; display: grid; grid-template-columns: 80px minmax(0,1fr) 172px; gap: 18px; padding: 28px 0; align-items: start; }
+    .story + .story::before { content: ""; position: absolute; top: 0; left: 98px; right: 0; height: 1px; background: var(--divider); }
+    .story:not(.with-image) .story-content { grid-column: 2 / -1; }
+    .story-index { color: var(--quiet); font-size: 12px; font-weight: 800; padding-top: 4px; }
+    .story-media { grid-column: 3; grid-row: 1; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: #1d1e22; }
+    .story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .story-content { grid-column: 2; grid-row: 1; min-width: 0; }
+    .story-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+    .story-type { color: #c9cbd4; background: #1f2026; border-radius: 7px; padding: 1px 7px; font-size: 11px; font-weight: 800; }
+    .story-note { color: #d4b685; font-size: 10px; font-weight: 700; }
+    .story-note::before { content: "·"; margin-right: 7px; color: var(--quiet); }
+    .story h3 { margin: 0 0 9px; font-size: 21px; line-height: 1.42; font-weight: 780; overflow-wrap: anywhere; }
+    .story-body-link { display: block; border-radius: 4px; }
+    .story-body-link:hover h3, .story-body-link:focus-visible h3 { color: var(--lime); }
+    .story p { margin: 0; }
+    .story-summary { color: var(--secondary); font-size: 13px; line-height: 1.78; }
+    .story-sources { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 15px; color: var(--quiet); font-size: 12px; }
+    .story-sources a { color: var(--quiet); }
+    .story-sources a:hover { color: var(--secondary); }
+    .takeaway { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 18px; padding-top: 24px; }
+    .takeaway .arrow { font-size: 26px; line-height: 1; color: var(--coral); }
+    .takeaway b { display: block; font-size: 11px; color: var(--lime); margin-bottom: 6px; }
+    .takeaway p { margin: 0; max-width: 850px; font-size: 14px; line-height: 1.83; color: #d4d5db; }
+    .section-break { width: 100%; height: 1px; background: var(--divider); }
+    .resources { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 34px; margin-left: 98px; }
+    .resource { position: relative; display: flex; gap: 13px; padding: 17px 0 19px; }
+    .resource:nth-child(n+3)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+    .resource svg { color: var(--mint); width: 17px; height: 17px; flex: none; margin-top: 4px; }
+    .resource strong { display: block; font-size: 15px; line-height: 1.4; }
+    .resource small { display: block; color: var(--quiet); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+    .endnote { padding: 44px 0 88px; }
+    .endnote .micro-label { display: block; margin-bottom: 12px; }
+    .endnote p { margin: 0; max-width: 920px; font-size: clamp(23px, 2.8vw, 35px); line-height: 1.55; font-weight: 720; }
+    .endnote em { font-style: normal; color: var(--lime); }
+    .footer { padding: 24px 0 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--quiet); font-size: 11px; }
+    .footer a { color: var(--secondary); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .wrap, .content { width: calc(100% - 40px); }
+      .story { grid-template-columns: 48px minmax(0,1fr) 140px; gap: 13px; }
+      .section-head { grid-template-columns: 48px 1fr; gap: 13px; }
+      .section-context, .resources { margin-left: 61px; }
+      .takeaway { grid-template-columns: 48px 1fr; gap: 13px; }
+      .story + .story::before { left: 61px; }
+    }
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 105px; }
+      .wrap, .content { width: calc(100% - 32px); }
+      .topbar { height: 58px; }
+      .topbar .wrap { gap: 10px; }
+      .topbar-date { font-size: 11px; }
+      .brand { font-size: 13px; }
+      .chapter-nav { top: 58px; }
+      .chapter-nav .wrap { gap: 5px; min-height: 45px; }
+      .chapter-nav a { font-size: 11px; }
+      .edition { display: block; padding: 27px 0 25px; }
+      .edition h1 { font-size: 41px; }
+      .edition p { font-size: 13px; line-height: 1.75; }
+      .lead { min-height: 0; background: #1b1c22; overflow: visible; }
+      .lead-image-link { position: static; }
+      .lead img { position: static; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
+      .lead::after { display: none; }
+      .lead-copy { min-height: 0; padding: 24px; }
+      .lead h2 { font-size: 25px; }
+      .lead p { font-size: 12px; }
+      .overview { display: block; padding: 26px 0 32px; }
+      .overview p { font-size: 14px; margin-top: 8px; }
+      .highlights { padding-bottom: 30px; }
+      .highlights ol { grid-template-columns: 1fr; }
+      .section { padding: 53px 0 45px; }
+      .section-head { grid-template-columns: 28px 1fr; gap: 9px; margin-bottom: 14px; }
+      .section-head h2 { font-size: 29px; }
+      .section-context { margin: 0 0 18px 37px; }
+      .story { grid-template-columns: 28px minmax(0,1fr) 96px; gap: 9px; padding: 23px 0; }
+      .story + .story::before { left: 37px; }
+      .story h3 { font-size: 17px; }
+      .story-summary { font-size: 12px; }
+      .story-sources { font-size: 11px; }
+      .takeaway { grid-template-columns: 38px 1fr; gap: 8px; }
+      .takeaway p { font-size: 13px; }
+      .resources { grid-template-columns: 1fr; margin-left: 46px; }
+      .resource:nth-child(n+2)::before { content: ""; position: absolute; height: 1px; top: 0; left: 0; right: 0; background: var(--divider); }
+      .endnote { padding: 39px 0 60px; }
+      .endnote p { font-size: 23px; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 7px; }
+    }
+    @media (max-width: 380px) {
+      .edition h1 { font-size: 37px; }
+      .lead h2 { font-size: 22px; }
+      .story { grid-template-columns: 22px minmax(0,1fr) 82px; gap: 8px; }
+      .story + .story::before { left: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chapter-nav { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">B</span><span>每日晨报</span></a>
+      <span class="topbar-date">2026 / 11 / 14 · 星期六</span>
+    </div>
+  </header>
+  <main id="top">
+    <div class="wrap">
+      <section class="edition" aria-label="本期晨报">
+        <div><span class="edition-kicker">BISCAY / DAILY BRIEF / 11.14</span><h1>今日晨报</h1><p>科技、设计工具、AI、单机游戏与国产新能源。今天看 Agent 如何走向付款和会议现场，以及关键服务出故障时产品怎样保住信任。</p></div>
+      </section>
+      <section id="lead-area" aria-label="今日焦点">
+        <div class="lead"><div class="lead-copy"><span class="lead-label">今日焦点 · 11 月 13 日发布</span><a class="lead-body-link" href="https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/" target="_blank" rel="noopener noreferrer"><h2>ChatGPT Wallet 让 Agent 付款，但每笔交易仍要人确认</h2><p>OpenAI 在美国面向部分 Pro 用户通过 dots 逐步开放支付，强调卡号不交给 Agent、每次购买须安全验证。设计重点已从“帮我选”变成“我如何审、改、拒绝这笔交易”。</p></a><a class="lead-link" href="https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/" target="_blank" rel="noopener noreferrer">查看报道 <i data-lucide="arrow-up-right"></i></a></div></div>
+      </section>
+      <div class="rule"></div>
+      <section id="overview" class="overview" aria-label="今日总览"><span class="micro-label">今日总览</span><p>今天最值得盯的是 Agent 进入高风险动作：OpenAI 把购买和支付连起来，Claude 把会议讨论直接变成文档和任务，授权与复核正在成为主界面。微软 365 的跨服务故障则提醒团队，云端工作流要有可见的降级和恢复路径。设计工具没有同等级的新版本潮，新增线索更多来自 Chrome 的实现指南和社区动效模板，适合挑任务试，不必追热点。玩家可关注《毁灭战士：黑暗时代》DLC 更新与一款复古恐怖新作；车主则应观察问界的手势座舱、启境 OTA 和宁德时代的电池健康服务能否在真实使用中稳定兑现。</p></section>
+      <section class="highlights" aria-label="先看这 5 条"><span class="micro-label">先看这 5 条</span><ol>
+        <li><a href="https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/" target="_blank" rel="noopener noreferrer">ChatGPT Wallet 开始让 Agent 代付，逐笔确认和卡信息隔离成为体验核心。</a></li>
+        <li><a href="https://www.theguardian.com/technology/live/2026/nov/13/microsoft-outage-down-today-live-update-outlook-teams-365-when-fixed-latest-status-cause-news" target="_blank" rel="noopener noreferrer">微软 365 大范围故障持续影响企业服务，离线和恢复状态值得重新设计。</a></li>
+        <li><a href="https://developer.chrome.com/blog/modern-web-guidance-recap" target="_blank" rel="noopener noreferrer">Chrome 回顾 Modern Web Guidance 稳定版，把网页质量检查带进 Agent 开发流程。</a></li>
+        <li><a href="https://slayersclub.bethesda.net/en-US/news/doom-the-dark-ages-revelations-slaughter-mode-release-date" target="_blank" rel="noopener noreferrer">《毁灭战士：黑暗时代》DLC 将获免费无尽战斗模式，11 月 16 日上线。</a></li>
+        <li><a href="https://www.autohome.com.cn/news/202611/1318350.html" target="_blank" rel="noopener noreferrer">问界新 M8 上市，手势控车要看误触、反馈和驾驶场景是否可靠。</a></li>
+      </ol></section>
+    </div>
+    <nav class="chapter-nav" aria-label="板块导航"><div class="wrap"><a href="#tech">科技快讯</a><a href="#design">设计与工具</a><a href="#ai">AI 观察</a><a href="#game">游戏与主机</a><a href="#ev">国产新能源</a><a href="#resources">顺手收藏</a></div></nav>
+    <div class="content"><div id="sections"></div>
+      <section class="endnote" id="endnote"><span class="micro-label">给 UI 设计师的一句话</span><p>今天值得带走的判断是：<em>越能替用户行动的界面，越要让用户看见边界。</em> 付款要逐笔确认，会议转录要照顾在场者，车机手势要有明确反馈；云服务失效时，也应让任务有路可退。</p></section>
+    </div>
+  </main>
+  <footer class="footer wrap"><div>© 2026 Biscay · 本页按 11 月 14 日晨报整理，原始信息以来源页面为准。</div><span>长期阅读：<a href="https://www.ftium4.com/" target="_blank" rel="noopener noreferrer">ftium4</a> · <a href="https://quaily.com/dingyi" target="_blank" rel="noopener noreferrer">丁一的 Quaily</a></span></footer>
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const chapters = [];
+    const resources = [];
+    chapters.splice(0, chapters.length,
+      {id:'tech',number:'01',title:'科技快讯',context:'11 月 13 日消息优先；11 月 12 日条目标注 48 小时内。',stories:[
+        {tag:'云服务可靠性',note:'11 月 13 日',title:'微软 365 故障延续至次日，邮件与协作服务逐步恢复',summary:'设计师怎么看：这次影响 Outlook、Teams 等工作入口，恢复又是分批进行。状态页不能只写“正在修复”，产品还应说明哪些动作可能失败、何时重试、草稿是否保留。',sources:[['卫报','https://www.theguardian.com/technology/live/2026/nov/13/microsoft-outage-down-today-live-update-outlook-teams-365-when-fixed-latest-status-cause-news']]},
+        {tag:'智能眼镜 · 地区限定',note:'11 月 12 日 · 48 小时内',title:'Google 开放 Gemini 智能眼镜预购，并说明拍摄隐私边界',summary:'设计师怎么看：官方强调录制指示灯和眼镜视觉数据的处理规则。可穿戴 AI 的信任不只靠隐私政策，要让旁观者也能理解设备何时在看、何时在录；供货和手机兼容性需按地区核对。',sources:[['Google 官方博客','https://blog.google/innovation-and-ai/technology/xr-ar/google-intelligent-eyewear-collections-pre-order/'],['Google 隐私说明','https://blog.google/innovation-and-ai/technology/safety-security/intelligent-eyewear-privacy-protections/']]},
+        {tag:'开发者工具',note:'11 月 12 日 · 48 小时内',title:'Rust 1.100 稳定版发布，版本号首次进入三位数',summary:'设计师怎么看：语言更新本身不改变界面，但开发工具持续演进会影响交付和维护成本。给工程交接时仍要写清支持平台、状态与降级路径，别把一次构建成功当作完整验收。',sources:[['Rust 官方博客','https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/']]}
+      ],takeaway:'今天的科技线索一端是更贴身的设备入口，一端是企业云服务的脆弱性。新入口需要可见的权限与旁观者提示；旧入口出故障时，需要准确的状态、重试和数据保全。开发者工具越快迭代，设计交接越要写清可测试的行为，而不只是一张正常态截图。'},
+      {id:'design',number:'02',title:'设计与工具',context:'11 月 13 日的 Chrome 官方文章与新上架社区资源；社区模板不是平台新功能。',stories:[
+        {tag:'设计到代码 · 可收藏',note:'11 月 13 日回顾',title:'Chrome 回顾 Modern Web Guidance 稳定版，给 Agent 开发加网页质量检查',summary:'可收藏：稳定版 11 月 10 日已发布，13 日文章汇总其用法。这套指南把性能、可访问性和现代 Web 实践带入生成与验证流程。设计师可把它转成验收清单，逐项检查键盘、响应式和加载状态；文中案例数字来自团队自报。',sources:[['Chrome for Developers','https://developer.chrome.com/blog/modern-web-guidance-recap']]},
+        {tag:'动效素材 · 可试用',note:'11 月 13 日上榜',title:'Hoverine 展示可嵌入应用的 Rive 状态动效模板',summary:'可试用：模板覆盖按钮、加载、切换等微交互，并保留状态机。先测点击区域、键盘焦点与低动效模式，别让“好看”取代状态反馈。它是社区产品，不是 Rive 官方功能发布。',sources:[['Hoverine','https://hoverine.com/']]},
+        {tag:'Agent 模板 · 可收藏',note:'11 月 13 日上架',title:'Framer 社区模板 Keystone 把设计系统与六个 Agent 技能一起打包',summary:'可收藏：模板提供样式页、案例 CMS 和重品牌化等技能，适合研究“设计系统怎样约束 Agent 修改”。先看生成后的页面一致性与交付成本；这是第三方模板，不是 Framer 平台更新。',sources:[['Framer Marketplace','https://www.framer.com/marketplace/templates/keystone-advisory/']]},
+        {tag:'导航组件 · 可试用',note:'11 月 13 日上架',title:'Framer 社区组件 Stage Menu 提供可键盘操作的分层转场导航',summary:'可试用：作者声称支持触控关闭、Escape 和减少动态效果。适合品牌站原型，不宜直接搬进高频业务后台；先在手机和键盘场景验证可达性与返回路径。',sources:[['Framer Marketplace','https://www.framer.com/marketplace/components/stage-menu/']]}
+      ],takeaway:'今天没有必要把社区素材包装成“大厂更新”。真正值得观察的是：一边把网页质量规则交给 Agent 做检查，一边把可复用动效、设计系统和技能放进交付模板。设计师的价值在定义状态、约束和验收，而不是只挑一个更会生成的工具。社区模板适合拆解学习，生产使用还要核对授权、可访问性和维护性。'},
+      {id:'ai',number:'03',title:'AI 观察',context:'11 月 13 日支付发布优先；11 月 12 日的测试与诉讼标注 48 小时内。',stories:[
+        {tag:'Agent 支付 · 限定开放',note:'11 月 13 日',title:'OpenAI 推出 ChatGPT Wallet，先向美国部分 Pro 用户在 dots 中开放',summary:'对设计/产品工作的影响：官方称 Agent 不接触真实卡号，每笔购买仍需用户安全确认。电商流程要把商家、金额、运费、退货条件和最终授权摆到最后一步，别把“自动完成”做成黑盒。',sources:[['TechCrunch','https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/']]},
+        {tag:'会议 Agent · 测试中',note:'11 月 12 日 · 48 小时内',title:'Claude Meetings 开始在 Team 与 Enterprise 计划内测试',summary:'对设计/产品工作的影响：Claude 可作为可见参会者生成纪要和文档，目前先支持 Google Meet。会议转录涉及所有在场者；加入提示、外部来宾规则、工具授权和事后共享范围都应可理解。',sources:[['Claude 官方','https://claude.com/resources/articles/claude-meetings']]},
+        {tag:'产品分析 Agent · 测试中',note:'11 月 12 日 · 48 小时内',title:'Amplitude 展示 Wave：从回放与数据里找问题，再交给编码 Agent',summary:'对设计/产品工作的影响：案例把用户行为、反馈、代码和实验串成闭环，但效果数字来自 Amplitude 自身实验。适合先在低风险流程试“证据到方案”，保留人工审核与 A/B 结果，不要把相关性当因果。',sources:[['Amplitude 官方博客','https://amplitude.com/blog/wave-launch']]},
+        {tag:'AI 治理 · 诉讼中',note:'11 月 12 日 · 48 小时内',title:'非营利组织起诉多家 AI 公司，请求暂停更强模型研发',summary:'对设计/产品工作的影响：这是原告提出的诉讼请求，不是法院禁令。它再次把能力边界、风险披露和外部审查推到台前；做 AI 功能时应留出可追溯的版本、来源与申诉入口。',sources:[['Public Citizen 原告公告','https://www.citizen.org/news/coalition-of-nonprofits-files-landmark-lawsuit-to-stop-development-of-advanced-ai-systems-at-anthropic-google-meta-openai-and-spacexsi-that-proliferate-bioweapons-and-cyberattacks/']]}
+      ],takeaway:'AI 不是只在回答问题：付款、会议与产品迭代都开始进入“先做一步”的阶段。越接近真实资金、团队决策和用户数据，越需要逐笔授权、参与者告知、证据回溯与人工接管。测试版和厂商案例可做参考，不能直接当作所有团队可用的承诺；诉讼也应按程序进展看，而非当作监管定论。'},
+      {id:'game',number:'04',title:'游戏与主机',context:'11 月 13 日发售与媒体观察；DLC 消息来自 11 月 12 日，标注 48 小时内。',stories:[
+        {tag:'预载更新 · 媒体观察',note:'11 月 13 日',title:'《侠盗猎车手6》预载出现约 1GB 更新，改动内容尚无官方说明',summary:'玩家怎么看：多家媒体观察到 PS5 版本 1.002 更新，但 R 星未发布补丁说明。已预购玩家可留意本机下载状态；不要根据文件大小推断画质、性能或正式首日补丁内容。',sources:[['VICE','https://www.vice.com/en/article/gta-6-day-one-patch-ps5-version-1002/']]},
+        {tag:'单机 DLC',note:'11 月 12 日 · 48 小时内',title:'《毁灭战士：黑暗时代》“启示录”DLC 将在 16 日加入无尽战斗模式',summary:'玩家怎么看：这是付费 DLC 的免费内容更新，不是本体免费领取。喜欢战斗挑战的玩家可等模式实装后看手感与性能反馈，再决定是否补票 DLC。',sources:[['Bethesda 官方','https://slayersclub.bethesda.net/en-US/news/doom-the-dark-ages-revelations-slaughter-mode-release-date']]},
+        {tag:'独立新作',note:'11 月 13 日发售',title:'DERELIKT（PS1 风格科幻恐怖射击游戏）登陆 PC、PS5 与 Xbox',summary:'玩家怎么看：这款单人复古射击以太空站恐怖氛围为卖点。先试 Steam 试玩版或看首发口碑，尤其核对眩晕、语言和主机性能，再决定是否购买。',sources:[['发行方新闻稿','https://www.gamespress.com/en-US/Retro-Sci-Fi-Horror-DERELIKT-is-Available-Now-on-PC-and-Consoles'],['Steam 商店','https://store.steampowered.com/app/3810510/DERELIKT/']]}
+      ],takeaway:'本周末更值得玩家做的是核对可玩内容，而不是跟着更新文件猜改动。《毁灭战士：黑暗时代》的新模式有明确日期和 DLC 门槛；DERELIKT（PS1 风格科幻恐怖射击游戏）已可用试玩或首发评价筛选。《侠盗猎车手6》预载更新仍缺正式说明，保持观望。'},
+      {id:'ev',number:'05',title:'国产新能源汽车',context:'三条均为 11 月 13 日消息；发布演示、OTA 适用范围和质保条件须分开看。',stories:[
+        {tag:'新车上市',note:'11 月 13 日',title:'问界新 M8 上市，37.98 万至 46.98 万元，加入全维手势交互',summary:'产品体验怎么看：隔空开关门、屏幕内容转移等功能先看发布演示，购车时应实测误触率、反馈、乘客干扰与行车可用范围。“面向 L3 的架构”不等于现已开放 L3 自动驾驶。',sources:[['汽车之家','https://www.autohome.com.cn/news/202611/1318350.html']]},
+        {tag:'座舱与智驾 OTA',note:'11 月 13 日',title:'启境 GT7 宣布 OTA，升级鸿蒙座舱与华为乾崑 ADS 5.0.2',summary:'产品体验怎么看：新功能包含手势泊出与园区领航，具体可用性要看推送批次、车型配置和使用条件。升级前应确认提示、学习成本与旧功能位置是否改变。',sources:[['IT之家','https://www.ithome.com/1/026/660.htm']]},
+        {tag:'电池服务',note:'11 月 13 日',title:'宁德时代发布“巧克力电池管家”，主打在网电池健康可视化',summary:'产品体验怎么看：官方承诺对其换电网络内电池长期监测与保障，不能理解为所有车用电池通用。车主真正需要看懂的是检测结果、维修更换条件和服务网点覆盖。',sources:[['界面新闻','https://www.jiemian.com/article/15332154.html']]}
+      ],takeaway:'今天的车企消息从“更多配置”走向“更复杂的持续服务”。手势、智驾和电池健康都可能降低操作成本，但必须把适用条件、失败反馈与保障范围做得比宣传口号更清楚。价格和规格能帮助初筛，真正的购车判断仍要靠试驾、OTA 实测与当地服务覆盖。'}
+    );
+    resources.splice(0, resources.length,
+      {name:'DERELIKT（PS1 风格科幻恐怖射击游戏）Steam 试玩版',detail:'先试手感和画面风格，再看首发评价。',href:'https://store.steampowered.com/app/5242870/DERELIKT_Demo/',icon:'gamepad-2'},
+      {name:'Hoverine 模板使用说明',detail:'检查 Rive 状态机、真实输入控件与无障碍做法。',href:'https://hoverine.com/help',icon:'mouse-pointer-2'},
+      {name:'web.dev 可访问性课程',detail:'给动效导航与 Agent 生成页做键盘和语义验收。',href:'https://web.dev/learn/accessibility/',icon:'accessibility'},
+      {name:'Moonvy 设计素材周刊',detail:'补充素材与工具线索，入库前核对授权。',href:'https://moonvy.com/blog/tags/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90%E5%91%A8%E5%88%8A/',icon:'library'},
+      {name:'ftium4 体验碎周报',detail:'用长期观察对照今日产品变化。',href:'https://www.ftium4.com/',icon:'book-open'},
+      {name:'丁一的 Quaily',detail:'跟进设计与开发工具的真实工作流。',href:'https://quaily.com/dingyi',icon:'bookmark'}
+    );
+    const safe = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+    const sourceLinks = sources => sources.map(([name,href]) => `<a href="${safe(href)}" target="_blank" rel="noopener noreferrer" aria-label="${safe(name)}">${safe(new URL(href).hostname.replace(/^www\./,''))}</a>`).join(' · ');
+    const storyHTML = (story,index) => `<article class="story${story.image?' with-image':''}"><span class="story-index">${String(index+1).padStart(2,'0')}</span><div class="story-content"><div class="story-meta"><span class="story-type">${safe(story.tag)}</span>${story.note?`<span class="story-note">${safe(story.note)}</span>`:''}</div><a class="story-body-link" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><h3>${safe(story.title)}</h3><p class="story-summary">${safe(story.summary)}</p></a><div class="story-sources">${sourceLinks(story.sources)}</div></div>${story.image?`<a class="story-media" href="${safe(story.sources[0][1])}" target="_blank" rel="noopener noreferrer" aria-label="阅读原文：${safe(story.title)}"><img src="${safe(story.image)}" alt="${safe(story.alt)}" width="512" height="512" loading="lazy"></a>`:''}</article>`;
+    const chapterHTML = chapter => `<section id="${chapter.id}" class="section chapter"><div class="section-head"><span class="chapter-number">${chapter.number} /</span><h2>${chapter.title}</h2></div>${chapter.context?`<p class="section-context">${safe(chapter.context)}</p>`:''}<div class="story-list">${chapter.stories.map(storyHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>总结与思考</b><p>${safe(chapter.takeaway)}</p></div></div></section><div class="section-break"></div>`;
+    const resourceHTML = item => `<a class="resource" href="${safe(item.href)}" target="_blank" rel="noopener noreferrer"><i data-lucide="${item.icon}"></i><span><strong>${safe(item.name)} ↗</strong><small>${safe(item.detail)}</small></span></a>`;
+    document.getElementById('sections').innerHTML = chapters.map(chapterHTML).join('') + `<section id="resources" class="section"><div class="section-head"><span class="chapter-number">06 /</span><h2>今天可以顺手收藏</h2></div><div class="resources">${resources.map(resourceHTML).join('')}</div><div class="takeaway"><span class="arrow">↳</span><div><b>收藏建议</b><p>Hoverine 与 web.dev 适合拿来拆解交互状态和无障碍检查；DERELIKT（PS1 风格科幻恐怖射击游戏）先试玩再决定是否购买。Moonvy 可补素材，ftium4 和 Quaily 留作长期体验观察。</p></div></div></section><div class="section-break"></div>`;
+    const chapterNav = document.querySelector('.chapter-nav');
+    const newsContent = document.getElementById('sections');
+    function updateChapterNav() {
+      const bounds = newsContent.getBoundingClientRect();
+      const topOffset = document.querySelector('.topbar').offsetHeight;
+      chapterNav.classList.toggle('visible', bounds.top <= topOffset + 180 && bounds.bottom > topOffset);
+    }
+    window.addEventListener('scroll', updateChapterNav, {passive:true});
+    window.addEventListener('resize', updateChapterNav);
+    const links = [...document.querySelectorAll('.chapter-nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const current = entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (current) links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current.target.id));
+    },{rootMargin:'-115px 0px -55% 0px'});
+    document.querySelectorAll('.section').forEach(section=>observer.observe(section));
+    if (window.lucide) lucide.createIcons();
+    updateChapterNav();
+  </script>
+</body>
+</html>
